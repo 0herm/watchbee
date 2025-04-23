@@ -18,7 +18,7 @@ export default function MediaCard({ item }: MediaCardProps) {
                         <div className="relative w-full aspect-[2/3] overflow-hidden">
                             <Image
                                 src={`${config.url.IMAGE_URL}${item.poster_path}`}
-                                alt={`${item.media_type === 'movie' ? item.original_title : item.original_name}`}
+                                alt={'Media poster'}
                                 fill={true}
                                 className="object-cover"
                             />
@@ -27,7 +27,13 @@ export default function MediaCard({ item }: MediaCardProps) {
                 </CardContent>
                 <CardFooter className="flex items-center justify-between bg-zinc-900 py-3 px-4">
                     <h1 className="text-sm font-medium truncate text-gray-300">
-                        {item.media_type === 'movie' ? item.original_title : item.original_name}
+                        {item.media_type === 'movie'
+                                        ? config.setting.ORIGINAL_TITLE
+                                            ? item.original_title
+                                            : item.title
+                                        : config.setting.ORIGINAL_TITLE
+                                            ? item.original_name
+                                            : item.name}
                     </h1>
                 </CardFooter>
             </Card>

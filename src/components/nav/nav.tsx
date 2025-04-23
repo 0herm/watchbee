@@ -44,7 +44,7 @@ export default function NavBar() {
                     <span className='sr-only'>Toggle theme</span>
                 </Button>
                 <Link 
-                    href={'/login'}
+                    href={'/account'}
                     className='p-1'
                 >
                     <User />
