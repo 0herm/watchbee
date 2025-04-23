@@ -10,6 +10,18 @@ export async function getTrending(): Promise<TrendingItemsProp|string> {
     return await getWrapper('3/trending/all/week?language=en-US')
 }
 
+export async function getSearch(query: string, include_adult: boolean | null = null, language: string | null = null, page: number | number = 1): Promise<SearchItemsProps|string> {
+    const queryParts = new URLSearchParams({ query: query })
+    if (include_adult) queryParts.append('include_adult', String(include_adult))
+    if (language) queryParts.append('language', language)
+    if (page) queryParts.append('page', String(page))
+
+    const path = `3/search/multi?${queryParts.toString()}`
+    return await getWrapper(path)
+}
+
+
+
 async function getWrapper(path: string, options = {}) {
     const defaultOptions = {
         method: 'GET',

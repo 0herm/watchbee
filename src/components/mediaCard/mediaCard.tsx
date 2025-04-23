@@ -10,18 +10,21 @@ interface MediaCardProps {
 export default function MediaCard({ item }: MediaCardProps) {
     return (
         <Link
+            className='w-[8rem]'
             href={`/${item.media_type}/${item.id}`}
         >
             <Card className="w-[8rem] h-full py-0 gap-0 overflow-hidden border-none shadow-lg text-white">
                 <CardContent className="p-0">
                     <div className="relative">
                         <div className="relative w-full aspect-[2/3] overflow-hidden">
+                        {item.poster_path &&
                             <Image
                                 src={`${config.url.IMAGE_URL}${item.poster_path}`}
                                 alt={'Media poster'}
                                 fill={true}
                                 className="object-cover"
                             />
+                        }
                         </div>
                     </div>
                 </CardContent>
