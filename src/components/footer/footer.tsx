@@ -1,9 +1,7 @@
 import { Clapperboard } from 'lucide-react'
+import config from '@config'
 
 export default function Footer() {
-
-    const version = process.env.NEXT_PUBLIC_VERSION
-
     return (
         <div className='flex flex-row items-center w-full p-4'>
             <div>
@@ -13,7 +11,7 @@ export default function Footer() {
                 </div>
                 <p className='text-sm p-[0.5rem]'>Opphavsrett © {new Date().getFullYear()} WatchBee</p>
             </div>
-            <p className='ml-auto bg-primary-foreground p-[0.5rem_1rem] rounded-md font-semibold text-[#599459]'>v{version}</p>
+            <p className='ml-auto bg-primary-foreground p-[0.5rem_1rem] rounded-md font-semibold text-[#599459]'>v{config.version}</p>
         </div>
     )
 }

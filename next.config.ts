@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  env: {
-        NEXT_PUBLIC_VERSION: process.env.npm_package_version,
+    images: {
+        remotePatterns: [new URL('https://image.tmdb.org/t/p/w500/*')],
     },
-};
+}
 
 export default nextConfig;
