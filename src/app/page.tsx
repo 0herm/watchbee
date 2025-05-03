@@ -3,7 +3,7 @@ import { getTrending, getNewMovies, getNewShows, getPopularMovies, getPopularSho
 
 type SectionProps = {
     title: string
-    items: TrendingItemsProp | string
+    items: TrendingProp | string
 }
 
 export default async function Home() {
@@ -20,7 +20,7 @@ export default async function Home() {
 
     return (
         <div className='flex flex-col gap-[1rem] max-w-[calc(100vw-1.25rem)] pr-[1.25rem]'>
-            <Section title="Trending"       items={trending} />
+            <Section title="Trending"        items={trending} />
             <Section title='New Movies'      items={newMovies} />
             <Section title='New Shows'       items={newShows} />
             <Section title='Popular Movies'  items={popularMovies} />

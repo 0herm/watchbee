@@ -6,7 +6,7 @@ const { ACCESS_TOKEN } = process.env
 const baseURL = config.url.API_URL
 const { LANGUAGE, REGION, INCLUDE_ADULT, TIMEZONE } = config.setting
 
-export async function getTrending(): Promise<TrendingItemsProp|string> {
+export async function getTrending(): Promise<TrendingProp|string> {
     const queryParts = new URLSearchParams()
     
     if (LANGUAGE) queryParts.append('language', LANGUAGE)
@@ -16,7 +16,7 @@ export async function getTrending(): Promise<TrendingItemsProp|string> {
 }
 
 // Movies
-export async function getNewMovies(): Promise<TrendingItemsProp|string> {
+export async function getNewMovies(): Promise<NewMoviesProp|string> {
     const queryParts = new URLSearchParams()
     
     if (LANGUAGE) queryParts.append('language', LANGUAGE)
@@ -26,7 +26,7 @@ export async function getNewMovies(): Promise<TrendingItemsProp|string> {
     return await getWrapper(path)
 }
 
-export async function getPopularMovies(): Promise<TrendingItemsProp|string> {
+export async function getPopularMovies(): Promise<TrendingProp|string> {
     const queryParts = new URLSearchParams()
     
     if (LANGUAGE) queryParts.append('language', LANGUAGE)
@@ -36,7 +36,7 @@ export async function getPopularMovies(): Promise<TrendingItemsProp|string> {
     return await getWrapper(path)
 }
 
-export async function getTopRatedMovies(): Promise<TrendingItemsProp|string> {
+export async function getTopRatedMovies(): Promise<TrendingProp|string> {
     const queryParts = new URLSearchParams()
     
     if (LANGUAGE) queryParts.append('language', LANGUAGE)
@@ -46,7 +46,7 @@ export async function getTopRatedMovies(): Promise<TrendingItemsProp|string> {
     return await getWrapper(path)
 }
 
-export async function getUpcomingMovies(): Promise<TrendingItemsProp|string> {
+export async function getUpcomingMovies(): Promise<TrendingProp|string> {
     const queryParts = new URLSearchParams()
     
     if (LANGUAGE) queryParts.append('language', LANGUAGE)
@@ -57,7 +57,7 @@ export async function getUpcomingMovies(): Promise<TrendingItemsProp|string> {
 }
 
 // TV Shows
-export async function getNewShows(): Promise<TrendingItemsProp|string> {
+export async function getNewShows(): Promise<TrendingProp|string> {
     const queryParts = new URLSearchParams()
     
     if (LANGUAGE) queryParts.append('language', LANGUAGE)
@@ -67,7 +67,7 @@ export async function getNewShows(): Promise<TrendingItemsProp|string> {
     return await getWrapper(path)
 }
 
-export async function getPopularShows(): Promise<TrendingItemsProp|string> {
+export async function getPopularShows(): Promise<TrendingProp|string> {
     const queryParts = new URLSearchParams()
     
     if (LANGUAGE) queryParts.append('language', LANGUAGE)
@@ -76,7 +76,7 @@ export async function getPopularShows(): Promise<TrendingItemsProp|string> {
     return await getWrapper(path)
 }
 
-export async function getTopRatedShows(): Promise<TrendingItemsProp|string> {
+export async function getTopRatedShows(): Promise<TrendingProp|string> {
     const queryParts = new URLSearchParams()
     
     if (LANGUAGE) queryParts.append('language', LANGUAGE)
@@ -85,7 +85,7 @@ export async function getTopRatedShows(): Promise<TrendingItemsProp|string> {
     return await getWrapper(path)
 }
 
-export async function getUpcomingShows(): Promise<TrendingItemsProp|string> {
+export async function getUpcomingShows(): Promise<TrendingProp|string> {
     const queryParts = new URLSearchParams()
     
     if (LANGUAGE) queryParts.append('language', LANGUAGE)
