@@ -2,25 +2,109 @@ import config from "@config"
 import dotenv from 'dotenv'
 
 dotenv.config()
-
 const { ACCESS_TOKEN } = process.env
 const baseURL = config.url.API_URL
+const { LANGUAGE, REGION, INCLUDE_ADULT, TIMEZONE } = config.setting
 
 export async function getTrending(): Promise<TrendingItemsProp|string> {
-    return await getWrapper('3/trending/all/week?language=en-US')
+    const queryParts = new URLSearchParams()
+    
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
+    
+    const path = `3/trending/all/week?${queryParts.toString()}`
+    return await getWrapper(path)
 }
 
-export async function getSearch(query: string, include_adult: boolean | null = null, language: string | null = null, page: number | number = 1): Promise<SearchItemsProps|string> {
+// Movies
+export async function getNewMovies(): Promise<TrendingItemsProp|string> {
+    const queryParts = new URLSearchParams()
+    
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
+    if (REGION) queryParts.append('region', REGION)
+    
+    const path = `3/movie/now_playing?${queryParts.toString()}`
+    return await getWrapper(path)
+}
+
+export async function getPopularMovies(): Promise<TrendingItemsProp|string> {
+    const queryParts = new URLSearchParams()
+    
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
+    if (REGION) queryParts.append('region', REGION)
+    
+    const path = `3/movie/popular?${queryParts.toString()}`
+    return await getWrapper(path)
+}
+
+export async function getTopRatedMovies(): Promise<TrendingItemsProp|string> {
+    const queryParts = new URLSearchParams()
+    
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
+    if (REGION) queryParts.append('region', REGION)
+    
+    const path = `3/movie/top_rated?${queryParts.toString()}`
+    return await getWrapper(path)
+}
+
+export async function getUpcomingMovies(): Promise<TrendingItemsProp|string> {
+    const queryParts = new URLSearchParams()
+    
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
+    if (REGION) queryParts.append('region', REGION)
+    
+    const path = `3/movie/upcoming?${queryParts.toString()}`
+    return await getWrapper(path)
+}
+
+// TV Shows
+export async function getNewShows(): Promise<TrendingItemsProp|string> {
+    const queryParts = new URLSearchParams()
+    
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
+    if (TIMEZONE) queryParts.append('timezone', TIMEZONE)
+    
+    const path = `3/tv/airing_today?${queryParts.toString()}`
+    return await getWrapper(path)
+}
+
+export async function getPopularShows(): Promise<TrendingItemsProp|string> {
+    const queryParts = new URLSearchParams()
+    
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
+    
+    const path = `3/tv/popular?${queryParts.toString()}`
+    return await getWrapper(path)
+}
+
+export async function getTopRatedShows(): Promise<TrendingItemsProp|string> {
+    const queryParts = new URLSearchParams()
+    
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
+    
+    const path = `3/tv/top_rated?${queryParts.toString()}`
+    return await getWrapper(path)
+}
+
+export async function getUpcomingShows(): Promise<TrendingItemsProp|string> {
+    const queryParts = new URLSearchParams()
+    
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
+    if (TIMEZONE) queryParts.append('region', TIMEZONE)
+    
+    const path = `3/tv/on_the_air?${queryParts.toString()}`
+    return await getWrapper(path)
+}
+
+export async function getSearch(query: string, page: number | number = 1): Promise<SearchItemsProps|string> {
     const queryParts = new URLSearchParams({ query: query })
-    if (include_adult) queryParts.append('include_adult', String(include_adult))
-    if (language) queryParts.append('language', language)
+
+    if (INCLUDE_ADULT) queryParts.append('include_adult', String(INCLUDE_ADULT))
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
     if (page) queryParts.append('page', String(page))
 
     const path = `3/search/multi?${queryParts.toString()}`
     return await getWrapper(path)
 }
-
-
 
 async function getWrapper(path: string, options = {}) {
     const defaultOptions = {

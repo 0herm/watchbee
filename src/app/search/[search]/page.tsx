@@ -1,6 +1,5 @@
 import MediaCard from "@/components/mediaCard/mediaCard"
 import { getSearch } from "@/utils/api"
-import config from "@config"
 
 type SectionProps = {
     title: string
@@ -10,7 +9,7 @@ type SectionProps = {
 export default async function Page({ params }: { params: Promise<{ search: string }> }) {
     const param = (await params).search
 
-    const items = await getSearch(param, config.setting.INCLUDE_ADULT, config.setting.LANGUAGE)
+    const items = await getSearch(param)
 
     return (
         <div className='w-full max-w-[calc(100vw-1.25rem)] pr-[1.25rem]'>

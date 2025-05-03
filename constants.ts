@@ -11,10 +11,11 @@ const config = {
         IMAGE_URL:  'https://image.tmdb.org/t/p/w500'
     },
     setting: {
-        REGION:         process.env.REGION                      || 'NO', 
-        LANGUAGE:       process.env.LANGUAGE                    || 'en-US', 
+        REGION:         process.env.REGION                      || 'GB', 
+        LANGUAGE:       process.env.LANGUAGE                    || 'en-GB', 
         ORIGINAL_TITLE: process.env.ORIGINAL_TITLE === 'true'   || false,
-        INCLUDE_ADULT:  process.env.INCLUDE_ADULT === 'true'    || false
+        INCLUDE_ADULT:  process.env.INCLUDE_ADULT === 'true'    || false,
+        TIMEZONE:       process.env.TIMEZONE                    || 'Europe/London',
     },
     database: {
         HOST: process.env.POSTGRES_HOST                         || 'localhost',

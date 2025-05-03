@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS Lists (
 -- Media
 CREATE TABLE IF NOT EXISTS Media (
     id SERIAL PRIMARY KEY,
-    title TEXT NOT NULL,
+    tmdb_id INTEGER NOT NULL,
     type TEXT CHECK (type IN ('movie', 'show'))
 );
 
