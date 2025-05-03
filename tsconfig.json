@@ -20,6 +20,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@db": ["./src/utils/db.ts"],
       "@config": ["./constants.ts"],
       "@parent/*": ["./*"],
       "@components/*": ["./src/components/*"],

@@ -7,7 +7,7 @@ type SectionProps = {
     items: TrendingItemsProp | string
 }
 
-export default async function Page({ params }: { params: { search: string } }) {
+export default async function Page({ params }: { params: Promise<{ search: string }> }) {
     const param = (await params).search
 
     const items = await getSearch(param, config.setting.INCLUDE_ADULT, config.setting.LANGUAGE)
