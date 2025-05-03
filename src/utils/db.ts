@@ -6,10 +6,7 @@ const {
     PORT,
     USER,
     PASSWORD,
-    DB,
-    MAX_CONN,
-    IDLE_TIMEOUT_MS,
-    TIMEOUT_MS
+    DB
 } = config.database
 
 const { Pool } = pg
@@ -18,10 +15,7 @@ const pool = new Pool({
     port: Number(PORT),
     user: USER,
     password: PASSWORD,
-    database: DB,
-    max: Number(MAX_CONN),
-    idleTimeoutMillis: Number(IDLE_TIMEOUT_MS),
-    connectionTimeoutMillis: Number(TIMEOUT_MS)
+    database: DB
 })
 
 export default async function run(query: string, params: (string | number | null)[]) {

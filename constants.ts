@@ -18,14 +18,11 @@ const config = {
         TIMEZONE:       process.env.TIMEZONE                    || 'Europe/London',
     },
     database: {
-        HOST: process.env.POSTGRES_HOST                         || 'localhost',
+        HOST: process.env.POSTGRES_HOST                         || 'postgres',
         PORT: process.env.POSTGRES_PORT                         || '5432',
         USER: process.env.POSTGRES_USER                         || 'admin',
         PASSWORD: process.env.POSTGRES_PASSWORD                 || 'CHANGEME',
         DB: process.env.POSTGRES_DB                             || 'watchbee',
-        MAX_CONN: process.env.POSTGRES_MAX_CONN                 || '10',
-        IDLE_TIMEOUT_MS: process.env.POSTGRES_IDLE_TIMEOUT_MS   || '5000',
-        TIMEOUT_MS: process.env.POSTGRES_TIMEOUT_MS             || '3000'
     },
     version
 }
