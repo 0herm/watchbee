@@ -26,7 +26,7 @@ export default function NavBar() {
                     <Link href={'/'} className='h-full'>
                         <Clapperboard className='h-full w-auto p-2 text-[#599459]' />
                     </Link>
-                    <h1 className='hidden md:block'>WatchBee</h1>
+                    <h1 className='hidden sm:block'>WatchBee</h1>
                 </div>
 
                 <div className='flex flex-row items-center gap-[0.5rem] py-1 px-3'>
