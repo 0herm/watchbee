@@ -56,6 +56,17 @@ export async function getUpcomingMovies(): Promise<TrendingProp|string> {
     return await getWrapper(path)
 }
 
+// Movie
+export async function getDetailsMovie(id:number): Promise<MovieDetailsProp|string> {
+    const queryParts = new URLSearchParams()
+    
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
+    queryParts.append('append_to_response', 'watch/providers')
+    
+    const path = `3/movie/${id}?${queryParts.toString()}`
+    return await getWrapper(path)
+}
+
 // TV Shows
 export async function getNewShows(): Promise<TrendingProp|string> {
     const queryParts = new URLSearchParams()
@@ -95,6 +106,18 @@ export async function getUpcomingShows(): Promise<TrendingProp|string> {
     return await getWrapper(path)
 }
 
+// TV Show
+export async function getDetailsShow(id:number): Promise<ShowDetailsProp|string> {
+    const queryParts = new URLSearchParams()
+    
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
+    queryParts.append('append_to_response', 'watch/providers')
+    
+    const path = `3/tv/${id}?${queryParts.toString()}`
+    return await getWrapper(path)
+}
+
+// Search
 export async function getSearch(query: string, page: number | number = 1): Promise<SearchItemsProps|string> {
     const queryParts = new URLSearchParams({ query: query })
 
