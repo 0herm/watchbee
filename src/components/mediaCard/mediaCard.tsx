@@ -3,6 +3,7 @@ import Image from 'next/image'
 import config from '@config'
 import Link from 'next/link'
 import WatchTool from '@components/watchtool/watchtool';
+import { Image as ImageIcon } from 'lucide-react'
 
 interface MediaCardProps {
     item: TrendingItemProp;
@@ -15,14 +16,18 @@ export default function MediaCard({ item }: MediaCardProps) {
                 <div className="relative flex w-full h-full items-center justify-center overflow-hidden">
                     <Link href={`/${item.media_type}/${item.id}`} >
                         <div className="relative h-full w-[8rem] aspect-[2/3] overflow-hidden group-hover:opacity-50 group-hover:blur-sm transition-all duration-300">
-                            <Image
-                                src={item.poster_path 
-                                    ? `${config.url.IMAGE_URL}${item.poster_path}` 
-                                    : '/fallback-image.jpg'}
-                                alt={'( poster )'}
-                                fill
-                                className="object-cover flex items-center justify-center"
-                            />
+                            {item.poster_path ? (
+                                <Image
+                                    src={`${config.url.IMAGE_URL}${item.poster_path}`}
+                                    alt={'poster'}
+                                    fill
+                                    className="object-cover flex items-center justify-center"
+                                />
+                            ) : (
+                                <div className="flex items-center justify-center h-full w-full">
+                                    <ImageIcon className='w-full h-full p-[2rem]' />
+                                </div>
+                            )}
                         </div>
                     </Link>
                     <div className="hidden group-hover:block absolute">

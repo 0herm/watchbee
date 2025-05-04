@@ -22,7 +22,7 @@ export default function RootLayout({ children }: Readonly<{children: React.React
                 <body className='w-screen h-screen m-0 p-0 font-[family-name:Inter] antialiased align-middle break-words leading-[1.5] tracking-normal'>
                     <ThemeProvider attribute='class' defaultTheme='dark' >
                         <div className='flex flex-col w-full min-h-screen'>
-                            <nav className='fixed top-[-10px] pt-[10px] h-[50px] w-full border-solid border-b border-accent backdrop-blur-md z-50 print:hidden'>
+                            <nav className='fixed h-[3rem] w-full border-solid border-b border-accent backdrop-blur-md z-50 print:hidden'>
                                 <NavBar />
                             </nav>
                             <main className='w-full bg-background flex flex-grow p-5 pt-20'>
