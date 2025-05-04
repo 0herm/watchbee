@@ -3,7 +3,6 @@ import { SquareCheckBig } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
-    DialogClose,
     DialogContent,
     DialogDescription,
     DialogFooter,
@@ -11,6 +10,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import config from "@config"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 
 export default function WatchTool() {
     return (
@@ -29,14 +30,24 @@ export default function WatchTool() {
                 </DialogDescription>
             </DialogHeader>
             <div>
-                <p>To be added</p>
+                <label className="block text-sm font-medium mb-2">
+                    Select a Watchlist
+                </label>
+                <Select>
+                    <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a Watchlist" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {config.lists.map((list) => (
+                            <SelectItem key={list} value={list}>
+                                {list}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
             </div>
             <DialogFooter className="sm:justify-start">
-                <DialogClose asChild>
-                    <Button type="button" variant="secondary">
-                    Close
-                    </Button>
-                </DialogClose>
+                <Button type="submit">Save changes</Button>
             </DialogFooter>
         </DialogContent>
         </Dialog>

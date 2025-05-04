@@ -14,15 +14,14 @@ export default function MediaCard({ item }: MediaCardProps) {
             <CardContent className="group p-0 w-full h-full ">
                 <div className="relative flex w-full h-full items-center justify-center overflow-hidden">
                     <Link href={`/${item.media_type}/${item.id}`} >
-                        <div className="relative w-full aspect-[2/3] overflow-hidden group-hover:opacity-50 group-hover:blur-sm transition-all duration-300">
+                        <div className="relative h-full w-[8rem] aspect-[2/3] overflow-hidden group-hover:opacity-50 group-hover:blur-sm transition-all duration-300">
                             <Image
                                 src={item.poster_path 
                                     ? `${config.url.IMAGE_URL}${item.poster_path}` 
                                     : '/fallback-image.jpg'}
-                                alt={'poster'}
-                                width={500}
-                                height={500}
-                                className="object-cover"
+                                alt={'( poster )'}
+                                fill
+                                className="object-cover flex items-center justify-center"
                             />
                         </div>
                     </Link>

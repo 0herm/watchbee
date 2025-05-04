@@ -24,6 +24,7 @@ const config = {
         PASSWORD: process.env.POSTGRES_PASSWORD                 || 'CHANGEME',
         DB: process.env.POSTGRES_DB                             || 'watchbee',
     },
+    lists: ['seen', 'watch'],
     version
 }
 

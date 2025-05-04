@@ -8,6 +8,8 @@ import { useRouter } from 'next/navigation'
 
 import {
     NavigationMenu,
+    NavigationMenuItem,
+    NavigationMenuList,
 } from '@/components/ui/navigation-menu'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -21,15 +23,31 @@ export default function NavBar() {
         <div className='flex flex-row justify-between items-center w-full h-full pr-1'>
                 
             <div className='flex flex-row h-full items-center'>
-                <Link href={'/'} className='h-full'> 
-                    {/* text-[#599459] */}
+                <Link href={'/'} className='h-full'>
                     <Clapperboard className='h-full w-auto p-2 text-[#599459]' />
                 </Link>
                 <h1 className='hidden md:block'>WatchBee</h1>
             </div>
             
             <NavigationMenu>
-               
+                <NavigationMenuList>
+                    <NavigationMenuItem>
+                        <Link 
+                            href='/'
+                            className='block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-hidden transition-colors hover:bg-accent hover:text-accent-foreground text-center text-[1rem]'
+                        >
+                            Home
+                        </Link>	
+                    </NavigationMenuItem>
+                    <NavigationMenuItem>
+                        <Link 
+                            href='/lists'
+                            className='block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-hidden transition-colors hover:bg-accent hover:text-accent-foreground text-center text-[1rem]'
+                        >
+                            Lists
+                        </Link>	
+                    </NavigationMenuItem>
+                </NavigationMenuList>
             </NavigationMenu>
 
             <div className='flex flex-row items-center gap-[0.5rem] py-1 px-3'>

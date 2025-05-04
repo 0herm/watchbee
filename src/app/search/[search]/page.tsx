@@ -3,7 +3,7 @@ import { getSearch } from "@/utils/api"
 
 type SectionProps = {
     title: string
-    items: TrendingItemsProp | string
+    items: TrendingProp | string
 }
 
 export default async function Page({ params }: { params: Promise<{ search: string }> }) {
