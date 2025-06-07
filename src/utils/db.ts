@@ -22,8 +22,6 @@ export default async function run(query: string, params: (string | number | null
     const con = await pool.connect()
     try {
         return await con.query(query, params)
-    } catch (error) {
-        throw error
     } finally {
         con.release()
     }

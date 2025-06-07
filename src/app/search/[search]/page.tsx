@@ -1,5 +1,5 @@
-import MediaCard from "@/components/mediaCard/mediaCard"
-import { getSearch } from "@/utils/api"
+import MediaCard from '@/components/mediaCard/mediaCard'
+import { getSearch } from '@/utils/tmdbApi'
 
 type SectionProps = {
     title: string

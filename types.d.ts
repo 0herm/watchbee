@@ -101,12 +101,12 @@ type MovieDetailsProp = {
         results: {
             [key: string]: {
                 link: string
-                [key in "flatrate" | "buy" | "rent"]: {
-                    display_priority: number;
-                    logo_path: string;
-                    provider_id: number;
-                    provider_name: string;
-                }[];
+                [key in 'flatrate' | 'buy' | 'rent']: {
+                    display_priority: number
+                    logo_path: string
+                    provider_id: number
+                    provider_name: string
+                }[]
             }
         }
     } | null
@@ -198,12 +198,12 @@ type ShowDetailsProp = {
         results: {
             [key: string]: {
                 link: string
-                [key in "flatrate" | "buy" | "rent"]: {
-                    display_priority: number;
-                    logo_path: string;
-                    provider_id: number;
-                    provider_name: string;
-                }[];
+                [key in 'flatrate' | 'buy' | 'rent']: {
+                    display_priority: number
+                    logo_path: string
+                    provider_id: number
+                    provider_name: string
+                }[]
             }
         }
     } | null

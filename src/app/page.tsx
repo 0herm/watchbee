@@ -1,5 +1,5 @@
-import MediaCard from "@/components/mediaCard/mediaCard";
-import { getTrending, getNewMovies, getNewShows, getPopularMovies, getPopularShows, getTopRatedMovies, getTopRatedShows, getUpcomingMovies, getUpcomingShows } from "@/utils/api"
+import MediaCard from '@/components/mediaCard/mediaCard'
+import { getTrending, getNewMovies, getNewShows, getPopularMovies, getPopularShows, getTopRatedMovies, getTopRatedShows, getUpcomingMovies, getUpcomingShows } from '@/utils/tmdbApi'
 
 type SectionProps = {
     title: string
@@ -20,7 +20,7 @@ export default async function Home() {
 
     return (
         <div className='flex flex-col gap-[1rem] max-w-[calc(100vw-1.25rem)] pr-[1.25rem]'>
-            <Section title="Trending"        items={trending} />
+            <Section title='Trending'        items={trending} />
             <Section title='New Movies'      items={newMovies} />
             <Section title='New Shows'       items={newShows} />
             <Section title='Popular Movies'  items={popularMovies} />

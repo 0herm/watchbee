@@ -1,5 +1,5 @@
-import MediaPage from "@/components/mediaPage/mediaPage";
-import { getDetailsMovie } from "@/utils/api";
+import MediaPage from '@/components/mediaPage/mediaPage'
+import { getDetailsMovie } from '@/utils/tmdbApi'
 
 export default async function Page({ params }: { params: Promise<{ id: number }> }) {
     const { id } = await params
