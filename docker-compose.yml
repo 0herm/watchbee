@@ -10,6 +10,7 @@ services:
       - postgres
     environment:
       - NEXT_TELEMETRY_DISABLED=1
+      - POSTGRES_HOST=postgres
 
   postgres:
     image: postgres:latest

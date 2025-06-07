@@ -18,13 +18,12 @@ const config = {
         TIMEZONE:       process.env.TIMEZONE                    || 'Europe/London',
     },
     database: {
-        HOST: process.env.POSTGRES_HOST                         || 'postgres',
+        HOST: process.env.POSTGRES_HOST                         || 'localhost',
         PORT: process.env.POSTGRES_PORT                         || '5432',
         USER: process.env.POSTGRES_USER                         || 'admin',
-        PASSWORD: process.env.POSTGRES_PASSWORD                 || 'CHANGEME',
+        PASSWORD: process.env.POSTGRES_PASSWORD,
         DB: process.env.POSTGRES_DB                             || 'watchbee',
     },
-    lists: ['seen', 'watch'],
     version
 }
 
