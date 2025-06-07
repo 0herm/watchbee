@@ -36,3 +36,8 @@ export async function addMedia(tmdbId: number, type: 'movie' | 'show', listId: n
     const result = await dbWrapper(query, [tmdbId, type, listId])
     return Array.isArray(result) ? result[0] : result
 }
+
+export async function getMediaByListId(listId: number) {
+    const query = 'SELECT * FROM Media WHERE list_id = $1 ORDER BY added_at DESC'
+    return await dbWrapper(query, [listId])
+}
