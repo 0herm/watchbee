@@ -76,15 +76,7 @@ export default function NavBar() {
                                 href='/'
                                 className='block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-hidden transition-colors hover:bg-accent hover:text-accent-foreground text-center text-[1rem]'
                             >
-                                Home
-                            </Link>	
-                        </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <Link 
-                                href='/lists'
-                                className='block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-hidden transition-colors hover:bg-accent hover:text-accent-foreground text-center text-[1rem]'
-                            >
-                                Lists
+                                
                             </Link>	
                         </NavigationMenuItem>
                     </NavigationMenuList>

@@ -6,11 +6,24 @@ import WatchTool from '@components/watchtool/watchtool'
 import { Image as ImageIcon } from 'lucide-react'
 
 interface MediaCardProps {
-    item: TrendingItemProp
-    lists: ListProp[]
+    item: MediaItemProps
+    lists: ListProps[]
+    type?: MediaType
 }
 
-export default function MediaCard({ item, lists }: MediaCardProps) {
+export default function MediaCard({ item, lists, type }: MediaCardProps) {
+    if (type) item.media_type = type === 'movie' ? 'movie' : 'tv'
+
+    const title = item.media_type === 'movie'
+        ? config.setting.ORIGINAL_TITLE
+            ? item.original_title
+            : item.title
+        : item.media_type === 'tv'
+            ? config.setting.ORIGINAL_TITLE
+                ? item.original_name
+                : item.name
+            : undefined
+
     return (
         <Card className='relative w-[8rem] h-full py-0 gap-0 overflow-hidden border-none shadow-lg text-white'>
             <CardContent className='group p-0 w-full h-full'>
@@ -38,16 +51,8 @@ export default function MediaCard({ item, lists }: MediaCardProps) {
             </CardContent>
             <CardFooter className='flex items-center justify-between bg-zinc-900 py-3 px-4'>
                 <Link href={`/${item.media_type}/${item.id}`} className='w-full'>
-                    <h1 className='text-sm font-medium truncate text-gray-300 w-full'>
-                        {item.media_type === 'movie'
-                            ? config.setting.ORIGINAL_TITLE
-                                ? item.original_title
-                                : item.title
-                            : item.media_type === 'tv'
-                                ? config.setting.ORIGINAL_TITLE
-                                    ? item.original_name
-                                    : item.name
-                                : '(No name)'}
+                    <h1 className={`text-sm font-medium truncate text-gray-300 w-full ${title ? '' : 'text-red-400'}`}>
+                        {title ? title : 'Error'}
                     </h1>
                 </Link>
             </CardFooter>

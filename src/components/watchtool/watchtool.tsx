@@ -19,7 +19,7 @@ import { addMedia, removeMedia, checkMediaInList } from '@/utils/api'
 type WatchToolProps = {
   tmdbId: number
   mediaType: 'movie' | 'show'
-  lists: ListProp[]
+  lists: ListProps[]
 }
 
 export default function WatchTool({ tmdbId, mediaType, lists = [] }: WatchToolProps) {

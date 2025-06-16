@@ -4,8 +4,8 @@ import { getSearch } from '@/utils/tmdbApi'
 
 type SectionProps = {
     title: string
-    items: TrendingProp | string
-    lists: ListProp[]
+    items: SearchProps | string
+    lists: ListProps[]
 }
 
 export default async function Page({ params }: { params: Promise<{ search: string }> }) {
@@ -13,7 +13,7 @@ export default async function Page({ params }: { params: Promise<{ search: strin
 
     const items = await getSearch(param)
     const listsData = await getAllLists()
-    const lists: ListProp[] = Array.isArray(listsData) ? listsData : []
+    const lists: ListProps[] = Array.isArray(listsData) ? listsData : []
 
     return (
         <div className='w-full max-w-[calc(100vw-1.25rem)] pr-[1.25rem]'>
@@ -27,7 +27,7 @@ function Section({ title, items, lists }: SectionProps) {
         <section className='flex flex-col font-medium'>
             <h1>{title}</h1>
             <div className='grid [grid-template-columns:repeat(auto-fill,_minmax(8rem,_1fr))] gap-[2rem] items-center justify-items-center'>
-                {typeof items !== 'string' && items.results.map((item: TrendingItemProp, index: number) => (
+                {typeof items !== 'string' && items.results.map((item: SearchItemProps, index: number) => (
                     (item.media_type === 'movie' || item.media_type === 'tv') && 
                         <MediaCard key={index} item={item} lists={lists} />
                 ))}

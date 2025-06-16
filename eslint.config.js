@@ -7,7 +7,7 @@ export default [
     eslint.configs.recommended,
     ...tseslint.configs.recommended,
     {
-        ignores: ['**/components/ui/**'],
+        ignores: ['**/components/ui/**', '**/lib/**'],
     },
     {
         plugins: {

@@ -1,12 +1,12 @@
 import config from '@config'
 import Image from 'next/image'
 
-type MediaPageProp = {
-    item: MovieDetailsProp | ShowDetailsProp
+type MediaPageProps = {
+    item: MovieDetailsProps | ShowDetailsProps
     media: 'movie' | 'show'
 }
 
-export default async function mediaPage({ item, media }: MediaPageProp) {
+export default async function mediaPage({ item, media }: MediaPageProps) {
     const customOrder       = ['flatrate', 'rent', 'buy']
     const providers         = Object.fromEntries(Object.entries(item['watch/providers']?.results[config.setting.REGION] || {}).filter(([key]) => key !== 'link'))
     const sortedProviders   = customOrder.reduce((item, key) => (key in providers ? { ...item, [key]: providers[key] } : item), {})
@@ -32,12 +32,12 @@ export default async function mediaPage({ item, media }: MediaPageProp) {
                         />
                     </div>
                     <div className='w-full h-[80%] flex justify-center xs:justify-start'>
-                        <h1 className='text-2xl'>{media === 'movie' ? (item as MovieDetailsProp).original_title : (item as ShowDetailsProp).name}</h1>
+                        <h1 className='text-2xl'>{media === 'movie' ? (item as MovieDetailsProps).original_title : (item as ShowDetailsProps).name}</h1>
                     </div>
                 </div>
             </div>
             <div className='p-4'>
-                <h1 className='text-lg font-semibold mb-2'>Where to watch {media === 'movie' ? (item as MovieDetailsProp).original_title : (item as ShowDetailsProp).name}</h1>
+                <h1 className='text-lg font-semibold mb-2'>Where to watch {media === 'movie' ? (item as MovieDetailsProps).original_title : (item as ShowDetailsProps).name}</h1>
                 {Object.keys(sortedProviders).length > 0 ? (
                     <ul className='flex flex-col gap-[1rem]'>
                         {Object.entries(sortedProviders).map(([key, value]) => (

@@ -1,4 +1,33 @@
-type TrendingItemProp = {
+type MediaType = 'movie' | 'show' 
+
+// General Item Media Prop
+type MediaItemProps = TrendingItemProps | ShowDetailsProps | MovieDetailsProps | SearchItemProps
+
+// General List Media Prop
+type MediaListProps = {
+    page: number
+    total_pages: number
+    total_results: number
+    results: MediaItemProps[]
+}
+
+// Lists
+type ListProps = {
+    id: number
+    name: string
+    created_at: string
+}
+
+// Media
+type MediaProps = {
+    id: number
+    tmdb_id: number
+    type: 'movie' | 'show'
+    added_at: string
+    list_id: number
+}
+
+type TrendingItemProps = {
     adult: boolean
     backdrop_path: string
     id: number
@@ -18,15 +47,15 @@ type TrendingItemProp = {
     vote_count: number
 }
 
-type TrendingProp = {
+type TrendingProps = {
     page: number
     total_pages: number
     total_results: number
-    results: TrendingItemProp[]
+    results: TrendingItemProps[]
 }
 
 // Movies
-type NewMoviesProp = {
+type NewMoviesProps = {
     page: number
     total_pages: number
     total_results: number
@@ -34,10 +63,10 @@ type NewMoviesProp = {
         maximum: string
         minimum: string
     }
-    results: NewMovieProp[]
+    results: NewMovieProps[]
 }
 
-type NewMovieProp = {
+type NewMovieProps = {
     adult: boolean
     backdrop_path: string
     id: number
@@ -46,7 +75,7 @@ type NewMovieProp = {
     original_title: string
     overview: string
     poster_path: string
-    media_type: string
+    media_type: 'movie'
     genre_ids: number[]
     popularity: number
     release_date: string
@@ -56,7 +85,8 @@ type NewMovieProp = {
 }
 
 // Movie
-type MovieDetailsProp = {
+type MovieDetailsProps = {
+    media_type: 'movie'
     adult: boolean
     backdrop_path: string
     belongs_to_collection: string | null
@@ -113,7 +143,8 @@ type MovieDetailsProp = {
 }
 
 // Show
-type ShowDetailsProp = {
+type ShowDetailsProps = {
+    media_type: 'show'
     adult: boolean
     backdrop_path: string
     created_by: {
@@ -230,25 +261,10 @@ type SearchItemProps = {
     vote_count: number
 }
 
-type SearchItemsProps = {
+// Search
+type SearchProps = {
     page: number
     results: SearchItemProps[]
     total_pages: number
     total_results: number
-}
-
-// Lists
-type ListProp = {
-    id: number
-    name: string
-    created_at: string
-}
-
-// Media
-type MediaProp = {
-    id: number
-    tmdb_id: number
-    type: 'movie' | 'show'
-    added_at: string
-    list_id: number
 }
