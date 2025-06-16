@@ -236,3 +236,19 @@ type SearchItemsProps = {
     total_pages: number
     total_results: number
 }
+
+// Lists
+type ListProp = {
+    id: number
+    name: string
+    created_at: string
+}
+
+// Media
+type MediaProp = {
+    id: number
+    tmdb_id: number
+    type: 'movie' | 'show'
+    added_at: string
+    list_id: number
+}

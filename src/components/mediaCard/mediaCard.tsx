@@ -7,9 +7,10 @@ import { Image as ImageIcon } from 'lucide-react'
 
 interface MediaCardProps {
     item: TrendingItemProp
+    lists: ListProp[]
 }
 
-export default function MediaCard({ item }: MediaCardProps) {
+export default function MediaCard({ item, lists }: MediaCardProps) {
     return (
         <Card className='relative w-[8rem] h-full py-0 gap-0 overflow-hidden border-none shadow-lg text-white'>
             <CardContent className='group p-0 w-full h-full'>
@@ -31,7 +32,7 @@ export default function MediaCard({ item }: MediaCardProps) {
                         </div>
                     </Link>
                     <div className='hidden group-hover:block absolute'>
-                        <WatchTool />
+                        <WatchTool tmdbId={item.id} mediaType={item.media_type === 'movie' ? 'movie' : 'show' } lists={lists} />
                     </div>
                 </div>
             </CardContent>
@@ -39,14 +40,14 @@ export default function MediaCard({ item }: MediaCardProps) {
                 <Link href={`/${item.media_type}/${item.id}`} className='w-full'>
                     <h1 className='text-sm font-medium truncate text-gray-300 w-full'>
                         {item.media_type === 'movie'
-                                        ? config.setting.ORIGINAL_TITLE
-                                            ? item.original_title
-                                            : item.title
-                        : item.media_type === 'tv'
-                                        ? config.setting.ORIGINAL_TITLE
-                                            ? item.original_name
-                                            : item.name
-                                        : '(No name)'}
+                            ? config.setting.ORIGINAL_TITLE
+                                ? item.original_title
+                                : item.title
+                            : item.media_type === 'tv'
+                                ? config.setting.ORIGINAL_TITLE
+                                    ? item.original_name
+                                    : item.name
+                                : '(No name)'}
                     </h1>
                 </Link>
             </CardFooter>
