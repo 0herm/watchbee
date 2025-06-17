@@ -55,3 +55,46 @@ export async function checkMediaInList(tmdbId: number, listId: number) {
     const result = await dbWrapper(query, [tmdbId, listId])
     return Array.isArray(result) && result[0] && result[0].count > 0
 }
+
+// Watched API functions
+export async function addWatched(tmdbId: number, type: 'movie' | 'show', name: string, totalSeasons?: number, showStatus?: string) {
+    const query = 'INSERT INTO Watched (tmdb_id, type, name, total_seasons, show_status) VALUES ($1, $2, $3, $4, $5) RETURNING *'
+    const result = await dbWrapper(query, [tmdbId, type, name, type === 'show' ? totalSeasons : null, type === 'show' ? showStatus : null])
+    return Array.isArray(result) ? result[0] : result
+}
+
+export async function removeWatched(tmdbId: number) {
+    const query = 'DELETE FROM Watched WHERE tmdb_id = $1 RETURNING *'
+    const result = await dbWrapper(query, [tmdbId])
+    return Array.isArray(result) ? result[0] : result
+}
+
+export async function getAllWatched() {
+    const query = 'SELECT * FROM Watched ORDER BY added_at DESC'
+    const result = await dbWrapper(query)
+    return Array.isArray(result) ? result : []
+}
+
+export async function getWatchedById(tmdbId: number) {
+    const query = 'SELECT * FROM Watched WHERE tmdb_id = $1'
+    const result = await dbWrapper(query, [tmdbId])
+    return Array.isArray(result) ? result[0] : result
+}
+
+export async function updateWatchedSeasons(tmdbId: number, watchedSeasons: number[]) {
+    const query = 'UPDATE Watched SET watched_seasons = $2 WHERE tmdb_id = $1 RETURNING *'
+    const result = await dbWrapper(query, [tmdbId, JSON.stringify(watchedSeasons)])
+    return Array.isArray(result) ? result[0] : result
+}
+
+export async function updateShowStatus(tmdbId: number, showStatus: string) {
+    const query = 'UPDATE Watched SET show_status = $2 WHERE tmdb_id = $1 RETURNING *'
+    const result = await dbWrapper(query, [tmdbId, showStatus])
+    return Array.isArray(result) ? result[0] : result
+}
+
+export async function updateTotalSeasons(tmdbId: number, totalSeasons: number) {
+    const query = 'UPDATE Watched SET total_seasons = $2 WHERE tmdb_id = $1 RETURNING *'
+    const result = await dbWrapper(query, [tmdbId, totalSeasons])
+    return Array.isArray(result) ? result[0] : result
+}

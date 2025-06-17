@@ -1,5 +1,5 @@
 import config from '@config'
-import Image from 'next/image'
+import LoadImage from '@components/loadImage/loadimage'
 
 type MediaPageProps = {
     item: MovieDetailsProps | ShowDetailsProps
@@ -15,20 +15,20 @@ export default async function mediaPage({ item, media }: MediaPageProps) {
         <div className='w-full h-full'>
             <div className='relative w-full h-[24rem] flex items-center'>
                 <div className='absolute w-full h-full'>
-                    <Image
-                        src={`${config.url.IMAGE_URL}${item.backdrop_path}`}
-                        alt={''}
+                    <LoadImage 
+                        source={`${config.url.IMAGE_URL}${item.backdrop_path}`}
+                        error={item.backdrop_path}
                         className='object-cover blur-[0.6rem] opacity-70'
-                        fill
+                        fill={true} 
                     />
                 </div>
                 <div className='w-full h-full flex flex-col xs:flex-row gap-[1rem] items-center pt-[1rem] xs:p-0 z-10'>
                     <div className='relative aspect-[2/3] w-auto h-[60%] xs:h-[80%]'>
-                        <Image
-                            src={`${config.url.IMAGE_URL}${item.poster_path}`}
-                            alt={''}
+                        <LoadImage 
+                            source={`${config.url.IMAGE_URL}${item.poster_path}`}
+                            error={item.poster_path}
                             className='object-contain rounded-sm'
-                            fill
+                            fill={true} 
                         />
                     </div>
                     <div className='w-full h-[80%] flex justify-center xs:justify-start'>
@@ -47,11 +47,11 @@ export default async function mediaPage({ item, media }: MediaPageProps) {
                                     {Array.isArray(value) &&
                                         value.map((provider, index) => (
                                             <div key={index} className='relative w-[3rem] h-[3rem] flex-shrink-0'>
-                                                <Image
-                                                    src={`${config.url.IMAGE_URL}${provider.logo_path}`}
-                                                    alt={''}
+                                                <LoadImage 
+                                                    source={`${config.url.IMAGE_URL}${provider.logo_path}`}
+                                                    error={provider.logo_path}
                                                     className='object-contain rounded-sm'
-                                                    fill
+                                                    fill={true} 
                                                 />
                                             </div>
                                         ))}
