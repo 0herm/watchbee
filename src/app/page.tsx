@@ -18,7 +18,7 @@ export default async function Home() {
     const lists: ListProps[] = Array.isArray(listsData) ? listsData : []
 
     return (
-        <div className='flex flex-col gap-[1rem] max-w-[calc(100vw-1.25rem)] pr-[1.25rem]'>
+        <div className='flex flex-col gap-[1rem] max-w-[calc(100vw-2.5rem)]'>
             <MediaSection title='Trending'        lists={lists} items={trending} />
             <MediaSection title='New Movies'      lists={lists} items={newMovies}       type={'movie'} />
             <MediaSection title='New Shows'       lists={lists} items={newShows}        type={'show'} />

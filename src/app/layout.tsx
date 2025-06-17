@@ -25,7 +25,7 @@ export default function RootLayout({ children }: Readonly<{children: React.React
                             <nav className='fixed h-[3rem] w-full border-solid border-b border-accent backdrop-blur-md z-50 print:hidden'>
                                 <NavBar />
                             </nav>
-                            <main className='w-full bg-background flex flex-grow p-5 pt-20'>
+                            <main className='w-full bg-background flex flex-grow p-[1.25rem] pt-[5rem]'>
                                 {children}
                             </main>
                             <footer className='mt-10 border-solid border-t border-accent'>

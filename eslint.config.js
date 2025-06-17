@@ -10,6 +10,7 @@ export default [
         ignores: ['**/components/ui/**', '**/lib/**'],
     },
     {
+        files: ['src/**/*.{ts,tsx}'],
         plugins: {
             '@stylistic/js': stylisticJs,
         },
