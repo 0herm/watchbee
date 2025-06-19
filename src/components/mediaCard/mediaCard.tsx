@@ -1,4 +1,4 @@
-import { Card, CardContent, CardFooter } from '@components/ui/card'
+import { Card, CardContent } from '@components/ui/card'
 import Image from 'next/image'
 import config from '@config'
 import Link from 'next/link'
@@ -12,23 +12,13 @@ interface MediaCardProps {
 }
 
 export default function MediaCard({ item, lists, type }: MediaCardProps) {
-    if (type) item.media_type = type === 'movie' ? 'movie' : 'tv'
-
-    const title = item.media_type === 'movie'
-        ? config.setting.ORIGINAL_TITLE
-            ? item.original_title
-            : item.title
-        : item.media_type === 'tv'
-            ? config.setting.ORIGINAL_TITLE
-                ? item.original_name
-                : item.name
-            : undefined
+    const mediaType = item.media_type === 'movie' || type === 'movie' ? 'movie' : item.media_type === 'tv' || type === 'show' ? 'show' : 'movie'
 
     return (
         <Card className='relative w-[8rem] h-full py-0 gap-0 overflow-hidden border-none shadow-lg text-white'>
             <CardContent className='group p-0 w-full h-full'>
                 <div className='relative flex w-full h-full items-center justify-center overflow-hidden'>
-                    <Link href={`/${item.media_type}/${item.id}`} >
+                    <Link href={`/${mediaType}/${item.id}`} >
                         <div className='relative h-full w-[8rem] aspect-[2/3] overflow-hidden group-hover:opacity-50 group-hover:blur-sm transition-all duration-300'>
                             {item.poster_path ? (
                                 <Image
@@ -45,17 +35,10 @@ export default function MediaCard({ item, lists, type }: MediaCardProps) {
                         </div>
                     </Link>
                     <div className='hidden group-hover:block absolute'>
-                        <WatchTool tmdbId={item.id} mediaType={item.media_type === 'movie' ? 'movie' : 'show' } lists={lists} />
+                        <WatchTool tmdbId={item.id} mediaType={mediaType} lists={lists} />
                     </div>
                 </div>
             </CardContent>
-            <CardFooter className='flex items-center justify-between bg-zinc-900 py-3 px-4'>
-                <Link href={`/${item.media_type}/${item.id}`} className='w-full'>
-                    <h1 className={`text-sm font-medium truncate text-gray-300 w-full ${title ? '' : 'text-red-400'}`}>
-                        {title ? title : 'Error'}
-                    </h1>
-                </Link>
-            </CardFooter>
         </Card>
     )
 }

@@ -18,7 +18,7 @@ import { addMedia, removeMedia, checkMediaInList } from '@/utils/api'
 
 type WatchToolProps = {
   tmdbId: number
-  mediaType: 'movie' | 'show'
+  mediaType: MediaType
   lists: ListProps[]
 }
 
@@ -114,7 +114,7 @@ export default function WatchTool({ tmdbId, mediaType, lists = [] }: WatchToolPr
             <Dialog>
                 <DialogTrigger asChild>
                     <Button variant='secondary' className='w-[2.5rem] h-[2.5rem]'>
-                        <SquareCheckBig className='stroke-white p-[0.3rem] w-[2rem] h-[2rem]' />
+                        <SquareCheckBig className='stroke-white p-[0.3rem] w-[2rem] h-[2rem] cursor-pointer'/>
                     </Button>
                 </DialogTrigger>
                 <DialogContent className='sm:max-w-md'>
@@ -130,7 +130,7 @@ export default function WatchTool({ tmdbId, mediaType, lists = [] }: WatchToolPr
     return (
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
-                <Button variant='secondary' className='w-[2.5rem] h-[2.5rem]'>
+                <Button variant='secondary' className='w-[2.5rem] h-[2.5rem] cursor-pointer'>
                     <SquareCheckBig className='stroke-white size-[1rem]' />
                 </Button>
             </DialogTrigger>
