@@ -24,6 +24,11 @@ const config = {
         PASSWORD: process.env.POSTGRES_PASSWORD,
         DB: process.env.POSTGRES_DB                             || 'watchbee',
     },
+    webpush: {
+        VAPID_PUBLIC_KEY: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+        VAPID_PRIVATE_KEY: process.env.VAPID_PRIVATE_KEY,
+        EMAIL: process.env.EMAIL || 'your-email@example.com'
+    },
     version
 }
 

@@ -3,6 +3,8 @@ export const dynamic = 'force-dynamic'
 import { getAllLists, getMediaByListId } from '@/utils/api'
 import MediaSection from '@/components/mediaSection/mediasection'
 import { getDetailsShow, getDetailsMovie } from '@/utils/tmdbApi'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default async function Page() {
     const listsData = await getAllLists()
@@ -37,12 +39,30 @@ export default async function Page() {
     )
 
     return (
-        <div>
-            {listsMedia.map((listMedia) => (
-                <div key={listMedia.list.id}>
-                    <MediaSection title={listMedia.list.name} lists={lists} items={listMedia.data} />
-                </div>
-            ))}
+        <div className='p-[1.5rem] space-y-[1.5rem]'>
+            <div className='flex space-x-[1rem]'>
+                <Link href='/account/settings'>
+                    <Button className='px-[1rem] py-[0.5rem] text-sm'>
+                        Settings
+                    </Button>
+                </Link>
+                <Link href='/account/notifications'>
+                    <Button className='px-[1rem] py-[0.5rem] text-sm'>
+                        Notifications
+                    </Button>
+                </Link>
+            </div>
+            <div className='space-y-[2rem]'>
+                {listsMedia.map((listMedia) => (
+                    <div key={listMedia.list.id} className='space-y-[1rem]'>
+                        <MediaSection 
+                            title={listMedia.list.name} 
+                            lists={lists} 
+                            items={listMedia.data} 
+                        />
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
