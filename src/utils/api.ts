@@ -14,6 +14,46 @@ export async function dbWrapper(query: string, params: any[] = []) {
     }
 }
 
+// User API functions
+export async function getUser() {
+    const query = 'SELECT * FROM Users WHERE id = 1'
+    const result = await dbWrapper(query)
+    return Array.isArray(result) && result.length > 0 ? result[0] : null
+}
+
+export async function getUserSettings() {
+    const query = 'SELECT region, language, original_title, include_adult, timezone FROM Users WHERE id = 1'
+    const result = await dbWrapper(query)
+    return Array.isArray(result) && result.length > 0 ? result[0] : null
+}
+
+export async function updateUser(data: {
+    region?: string,
+    language?: string,
+    original_title?: boolean,
+    include_adult?: boolean,
+    timezone?: string,
+    subscription?: string | null
+}) {
+    const fields: string[] = []
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const values: any[] = []
+    let paramIndex = 1
+    
+    for (const [key, value] of Object.entries(data)) {
+        if (value !== undefined) {
+            fields.push(`${key} = $${paramIndex++}`)
+            values.push(value)
+        }
+    }
+    
+    if (fields.length === 0) return null
+    
+    const query = `UPDATE Users SET ${fields.join(', ')} WHERE id = 1 RETURNING *`
+    const result = await dbWrapper(query, values)
+    return Array.isArray(result) ? result[0] : result
+}
+
 // List API functions
 export async function createList(name: string) {
     const query = 'INSERT INTO Lists (name) VALUES ($1) RETURNING *'

@@ -268,3 +268,21 @@ type SearchProps = {
     total_pages: number
     total_results: number
 }
+
+// Configuration
+type Country = {
+    iso_3166_1: string
+    english_name: string
+    native_name: string
+}
+
+type Language = {
+    iso_639_1: string
+    english_name: string
+    name: string
+}
+
+type Timezone = {
+    iso_3166_1: string
+    zones: string[]
+}

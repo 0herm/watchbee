@@ -6,6 +6,26 @@ const { ACCESS_TOKEN } = process.env
 const baseURL = config.url.API_URL
 const { LANGUAGE, REGION, INCLUDE_ADULT, TIMEZONE } = config.setting
 
+// Configuration
+export async function getCountries(): Promise<Country[] | string> {
+    const queryParts = new URLSearchParams()
+
+    if (LANGUAGE) queryParts.append('language', LANGUAGE)
+
+    const path = `3/configuration/countries?${queryParts.toString()}`
+    return await getWrapper(path)
+}
+
+export async function getLanguages(): Promise<Language[] | string> {
+    const path = '3/configuration/languages'
+    return await getWrapper(path)
+}
+
+export async function getTimezones(): Promise<Timezone[] | string> {
+    const path = '3/configuration/timezones'
+    return await getWrapper(path)
+}
+
 export async function getTrending(): Promise<TrendingProps | string> {
     const queryParts = new URLSearchParams()
     
