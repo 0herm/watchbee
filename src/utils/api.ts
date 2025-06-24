@@ -56,6 +56,12 @@ export async function checkMediaInList(tmdbId: number, listId: number) {
     return Array.isArray(result) && result[0] && result[0].count > 0
 }
 
+export async function checkMediaInAllLists(tmdbId: number) {
+    const query = 'SELECT list_id, name FROM Media INNER JOIN Lists ON Media.list_id = Lists.id WHERE tmdb_id = $1'
+    const result = await dbWrapper(query, [tmdbId])
+    return Array.isArray(result) ? result.map((row) => ({ id: row.list_id, name: row.name })) : []
+}
+
 // Watched API functions
 export async function addWatched(tmdbId: number, type: 'movie' | 'show', name: string, totalSeasons?: number, showStatus?: string) {
     const query = 'INSERT INTO Watched (tmdb_id, type, name, total_seasons, show_status) VALUES ($1, $2, $3, $4, $5) RETURNING *'

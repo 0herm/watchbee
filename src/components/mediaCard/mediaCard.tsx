@@ -2,7 +2,7 @@ import { Card, CardContent } from '@components/ui/card'
 import Image from 'next/image'
 import config from '@config'
 import Link from 'next/link'
-import WatchTool from '@components/watchtool/watchtool'
+import ListTool from '@/components/dialog/dialog'
 import { Image as ImageIcon } from 'lucide-react'
 
 interface MediaCardProps {
@@ -35,7 +35,7 @@ export default function MediaCard({ item, lists, type }: MediaCardProps) {
                         </div>
                     </Link>
                     <div className='hidden group-hover:block absolute'>
-                        <WatchTool tmdbId={item.id} mediaType={mediaType} lists={lists} />
+                        <ListTool tmdbId={item.id} mediaType={mediaType} lists={lists} />
                     </div>
                 </div>
             </CardContent>

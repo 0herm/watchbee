@@ -2,7 +2,7 @@ import config from '@config'
 import LoadImage from '@components/loadImage/loadimage'
 import { Globe, Star } from 'lucide-react'
 import Link from 'next/link'
-import WatchTool from '../watchtool/watchtool'
+import ListTool from '../dialog/dialog'
 import { getAllLists } from '@/utils/api'
 
 type MediaPageProps = {
@@ -72,7 +72,7 @@ export default async function mediaPage({ item, media }: MediaPageProps) {
                                     ))}
                                 </div>
                                 <div>
-                                    <WatchTool tmdbId={item.id} mediaType={media} lists={lists} />
+                                    <ListTool tmdbId={item.id} mediaType={media} lists={lists} />
                                 </div>
                             </div>
                         </div>
