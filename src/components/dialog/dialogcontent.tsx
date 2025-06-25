@@ -1,10 +1,12 @@
 'use client'
 
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@components/ui/dialog'
-import { Input } from '@components/ui/input'
 import { Button } from '@components/ui/button'
 import { useState } from 'react'
 import { addMedia, removeMedia } from '@/utils/api'
+import { Check, ChevronsUpDown } from 'lucide-react'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popoverdialog'
 
 type ContentDialogProps = {
     tmdbId: number
@@ -17,8 +19,11 @@ type ContentDialogProps = {
 }
 
 export default function ContentDialog({ tmdbId, mediaType, lists = [], mediaInLists }: ContentDialogProps) {
-    const [search, setSearch] = useState<string>('')
     const [currentLists, setCurrentLists] = useState(mediaInLists)
+    const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
+    const [selectedList, setSelectedList] = useState<string | null>(null)
+    const [selectedListID, setSelectedListID] = useState<number | null>(null)
+
 
     async function handleAddToList(listId: number) {
         const result = await addMedia(tmdbId, mediaType, listId)
@@ -34,38 +39,64 @@ export default function ContentDialog({ tmdbId, mediaType, lists = [], mediaInLi
         }
     }
 
-    const filteredLists = lists.filter(
-        (list) =>
-            list.name.toLowerCase().includes(search.toLowerCase()) &&
-            !currentLists.some((item) => item.id === list.id)
-    )
-
     return (
         <DialogContent className='sm:max-w-md'>
             <DialogHeader>
                 <DialogTitle>Manage Media in Lists</DialogTitle>
                 <DialogDescription>Search for a list to add or remove the media from existing lists.</DialogDescription>
             </DialogHeader>
-            <div className='space-y-[1rem]'>
-                <Input
-                    placeholder='Search lists...'
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className='w-full'
-                />
-                <div>
-                    <h3 className='text-sm font-semibold'>Add to List</h3>
-                    <div className='space-y-[0.5rem]'>
-                        {filteredLists.map((list) => (
-                            <div key={list.id} className='flex items-center justify-between'>
-                                <span>{list.name}</span>
-                                <Button size='sm' onClick={() => handleAddToList(list.id)}>
-                                    Add
-                                </Button>
-                            </div>
-                        ))}
-                    </div>
+            <div className='space-y-[2rem]'>
+                <div className='w-full flex xs:flex-row flex-col gap-[1rem]'>
+                    <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+                        <PopoverTrigger asChild>
+                            <Button
+                                variant='outline'
+                                role='combobox'
+                                className='w-full xs:max-w-[13rem] justify-between'
+                            >
+                                {selectedList || 'Select list'}
+                                <ChevronsUpDown className='opacity-50' />
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className='w-full xs:max-w-[13rem] p-0 z-[100]'>
+                            <Command>
+                                <CommandInput placeholder='Search lists' className='h-[2.25rem]' />
+                                <CommandList>
+                                    <CommandEmpty className='py-[1rem] text-center text-sm'>No lists found.</CommandEmpty>
+                                    <CommandGroup>
+                                        {lists.map((list) => (
+                                            <CommandItem
+                                                key={list.id}
+                                                value={String(list.id)}
+                                                onSelect={() => {
+                                                    setSelectedList(list.name)
+                                                    setSelectedListID(list.id)
+                                                    setPopoverOpen(false)
+                                                }}
+                                            >
+                                                {list.name}
+                                                <Check className={`ml-auto ${selectedListID === list.id ? 'opacity-100' : 'opacity-0'}`} />
+                                            </CommandItem>
+                                        ))}
+                                    </CommandGroup>
+                                </CommandList>
+                            </Command>
+                        </PopoverContent>
+                    </Popover>
+                    
+                    {selectedListID && (
+                        currentLists.find((list) => list.id === selectedListID) ? (
+                            <Button size='sm' variant='destructive' onClick={() => handleRemoveFromList(selectedListID)}>
+                                Remove
+                            </Button>
+                        ) : (
+                            <Button size='sm' variant='default' onClick={() => handleAddToList(selectedListID)}>
+                                Add
+                            </Button>
+                        )
+                    )}
                 </div>
+
                 <div>
                     <h3 className='text-sm font-semibold'>Currently in Lists</h3>
                     <div className='space-y-[0.5rem]'>
