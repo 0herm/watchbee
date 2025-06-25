@@ -61,6 +61,12 @@ export async function createList(name: string) {
     return Array.isArray(result) ? result[0] : result
 }
 
+export async function deleteList(id: number) {
+    const query = 'DELETE FROM Lists WHERE id = $1 RETURNING *'
+    const result = await dbWrapper(query, [id])
+    return Array.isArray(result) ? result[0] : result
+}
+
 export async function getAllLists() {
     const query = 'SELECT * FROM Lists ORDER BY created_at DESC'
     return await dbWrapper(query)

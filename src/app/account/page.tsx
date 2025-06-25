@@ -51,6 +51,11 @@ export default async function Page() {
                         Notifications
                     </Button>
                 </Link>
+                <Link href='/account/lists'>
+                    <Button className='px-[1rem] py-[0.5rem] text-sm'>
+                        Lists
+                    </Button>
+                </Link>
             </div>
             <div className='space-y-[2rem]'>
                 {listsMedia.map((listMedia) => (

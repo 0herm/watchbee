@@ -44,7 +44,7 @@ export default async function SettingsPage() {
                     <span>Back</span>
                 </Link>
             </div>
-            <div className='max-w-[30rem] bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-[1.5rem] shadow-lg'>
+            <div className='w-full max-w-[30rem] bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-[1.5rem] shadow-lg'>
                 <h1 className='text-xl font-bold mb-[1rem] text-white/90'>Account Settings</h1>
                 <Form action={updateSettings} className='w-full'>
                     <table className='text-white/90'>

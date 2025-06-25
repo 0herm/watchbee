@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { subscribeUser, unsubscribeUser } from './actions'
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
 function urlBase64ToUint8Array(base64String: string) {
     const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
@@ -145,7 +147,13 @@ export function InstallPrompt() {
     
 export default function Page() {
     return (
-        <div className='w-full h-full items-center'>
+        <div className='relative w-full h-full items-center'>
+            <div className='absolute left-[2rem] top-0'>
+                <Link href='/account' className='flex items-center text-white/80 hover:text-white transition-colors'>
+                    <ArrowLeft />
+                    <span>Back</span>
+                </Link>
+            </div>
             <PushNotificationManager />
             <InstallPrompt />
         </div>
