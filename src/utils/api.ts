@@ -109,9 +109,10 @@ export async function checkMediaInAllLists(tmdbId: number) {
 }
 
 // Watched API functions
-export async function addWatched(tmdbId: number, type: 'movie' | 'show', name: string, totalSeasons?: number, showStatus?: string) {
-    const query = 'INSERT INTO Watched (tmdb_id, type, name, total_seasons, show_status) VALUES ($1, $2, $3, $4, $5) RETURNING *'
-    const result = await dbWrapper(query, [tmdbId, type, name, type === 'show' ? totalSeasons : null, type === 'show' ? showStatus : null])
+export async function addWatched(tmdbId: number, type: 'movie' | 'show', name: string, totalSeasons?: number, showStatus?: string, watchedSeasons?: number[]) {
+    const query = 'INSERT INTO Watched (tmdb_id, type, name, total_seasons, show_status, watched_seasons) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *'
+    const formattedArray = watchedSeasons ? `{${watchedSeasons.join(',')}}` : null
+    const result = await dbWrapper(query, [tmdbId, type, name, type === 'show' ? totalSeasons : null, type === 'show' ? showStatus : null, formattedArray])
     return Array.isArray(result) ? result[0] : result
 }
 
@@ -135,7 +136,8 @@ export async function getWatchedById(tmdbId: number) {
 
 export async function updateWatchedSeasons(tmdbId: number, watchedSeasons: number[]) {
     const query = 'UPDATE Watched SET watched_seasons = $2 WHERE tmdb_id = $1 RETURNING *'
-    const result = await dbWrapper(query, [tmdbId, JSON.stringify(watchedSeasons)])
+    const formattedArray = `{${watchedSeasons.join(',')}}`
+    const result = await dbWrapper(query, [tmdbId, formattedArray])
     return Array.isArray(result) ? result[0] : result
 }
 

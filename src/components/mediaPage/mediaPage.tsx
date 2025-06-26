@@ -4,6 +4,7 @@ import { Globe, Star } from 'lucide-react'
 import Link from 'next/link'
 import ListTool from '../dialog/dialog'
 import { getAllLists } from '@/utils/api'
+import WatchedTool from '../dialog/watcheddialog'
 
 type MediaPageProps = {
     item: MovieDetailsProps | ShowDetailsProps
@@ -71,8 +72,9 @@ export default async function mediaPage({ item, media }: MediaPageProps) {
                                         </span>
                                     ))}
                                 </div>
-                                <div>
+                                <div className='flex gap-[0.5rem]'>
                                     <ListTool tmdbId={item.id} mediaType={media} lists={lists} />
+                                    <WatchedTool tmdbID={item.id} mediaType={media} media={item} />
                                 </div>
                             </div>
                         </div>

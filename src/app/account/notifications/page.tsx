@@ -20,7 +20,7 @@ function urlBase64ToUint8Array(base64String: string) {
     return outputArray
 }
 
-export function PushNotificationManager() {
+function PushNotificationManager() {
     const [isSupported, setIsSupported] = useState(false)
     const [subscription, setSubscription] = useState<PushSubscription | null>(
         null
@@ -104,7 +104,7 @@ export function PushNotificationManager() {
     )
 }
 
-export function InstallPrompt() {
+function InstallPrompt() {
     const [isIOS, setIsIOS] = useState(false)
     const [isStandalone, setIsStandalone] = useState(false)
 

@@ -37,7 +37,7 @@ export default function ListTool({ tmdbId, mediaType, lists = [] }: ListToolProp
     
 
     return (
-        <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); revalidate() }}>
+        <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); revalidate('/account') }}>
             <DialogTrigger asChild>
                 <Button variant='secondary' className='w-[2.5rem] h-[2.5rem] cursor-pointer'>
                     <SquareCheckBig className='stroke-white size-[1rem]' />

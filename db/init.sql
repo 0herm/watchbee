@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Watched (
     type TEXT CHECK (type IN ('movie', 'show')),
     added_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     name TEXT NOT NULL,
-    watched_seasons DECIMAL[] DEFAULT ARRAY[]::DECIMAL[],
+    watched_seasons INTEGER[] DEFAULT ARRAY[]::INTEGER[],
     total_seasons INTEGER,
     show_status TEXT
 );

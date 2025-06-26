@@ -286,3 +286,14 @@ type Timezone = {
     iso_3166_1: string
     zones: string[]
 }
+
+type WatchedProps = {
+    id: number
+    tmdb_id: number
+    type: 'movie' | 'show'
+    added_at: string
+    name: string
+    watched_seasons?: number[]
+    total_seasons?: number
+    show_status?: string
+}
