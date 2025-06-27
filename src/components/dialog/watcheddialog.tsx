@@ -67,11 +67,17 @@ export default function WatchedTool({ tmdbID, mediaType, media }: ListToolProps)
     }
 
     async function updateShowWatched() {
-        if (watchedSeasons.length < 1 &&  seen) await removeWatched(tmdbID); setSeen(null)
-        if (watchedSeasons.length > 0 &&  seen) await updateWatchedSeasons(tmdbID, watchedSeasons)
-        if (watchedSeasons.length > 0 && !seen) {
-            const result = await addWatched(tmdbID, 'show', title, totalSeasons, showStatus, watchedSeasons)
-            if (result) setSeen(result)
+        if (watchedSeasons.length < 1 && seen) {
+            const result = await removeWatched(tmdbID)
+            if (result) setSeen(null); setWatchedSeasons([])
+        } else if (watchedSeasons.length > 0) {
+            if (seen) {
+                const result = await updateWatchedSeasons(tmdbID, watchedSeasons)
+                if (result) setSeen({...seen, watched_seasons: watchedSeasons})
+            } else {
+                const result = await addWatched(tmdbID, 'show', title, totalSeasons, showStatus, watchedSeasons)
+                if (result) setSeen(result)
+            }
         }
     }
 

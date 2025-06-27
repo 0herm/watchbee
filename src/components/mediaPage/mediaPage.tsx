@@ -28,8 +28,8 @@ export default async function mediaPage({ item, media }: MediaPageProps) {
 
     return (
         <div className='w-full h-full'>
-            <div className='relative w-full h-[32rem] flex items-end'>
-                <div className='absolute w-full h-full'>
+            <div className='relative w-full h-full flex items-end'>
+                <div className='absolute w-full h-full top-0'>
                     <LoadImage 
                         source={`${config.url.IMAGE_URL}${item.backdrop_path}`}
                         error={item.backdrop_path}
@@ -37,10 +37,9 @@ export default async function mediaPage({ item, media }: MediaPageProps) {
                         fill={true} 
                     />
                 </div>
-                <div className='container mx-auto px-[1rem] w-full z-10 pb-[2.5rem]'>
+                <div className='container mx-auto w-full z-10 py-[3rem] px-[1rem]'>
                     <div className='flex flex-col md:flex-row gap-[2rem]'>
-                        <div className='relative aspect-[2/3] w-[12.5rem] md:w-[15rem] rounded-lg overflow-hidden shadow-2xl border-2 border-white/10 flex-shrink-0 
-                                        transform md:-translate-y-[4rem] mx-auto md:mx-0'>
+                        <div className='relative aspect-[2/3] w-[12.5rem] md:w-[15rem] rounded-lg overflow-hidden shadow-2xl border-2 border-white/10 flex-shrink-0 mx-auto md:mx-0'>
                             <LoadImage 
                                 source={`${config.url.IMAGE_URL}${item.poster_path}`}
                                 error={item.poster_path}
@@ -48,7 +47,7 @@ export default async function mediaPage({ item, media }: MediaPageProps) {
                                 fill={true} 
                             />
                         </div>
-                        <div className='flex flex-col'>
+                        <div className='flex flex-col md:pt-[4rem]'>
                             <div className='space-y-[1rem]'>
                                 <h1 className='text-3xl md:text-5xl font-bold text-center md:text-left'>{title}</h1>
                                 {originalTitle !== title && (
@@ -72,7 +71,7 @@ export default async function mediaPage({ item, media }: MediaPageProps) {
                                         </span>
                                     ))}
                                 </div>
-                                <div className='flex gap-[0.5rem]'>
+                                <div className='flex justify-center md:justify-start gap-[0.5rem]'>
                                     <ListTool tmdbId={item.id} mediaType={media} lists={lists} />
                                     <WatchedTool tmdbID={item.id} mediaType={media} media={item} />
                                 </div>

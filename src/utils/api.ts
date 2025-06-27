@@ -152,3 +152,13 @@ export async function updateTotalSeasons(tmdbId: number, totalSeasons: number) {
     const result = await dbWrapper(query, [tmdbId, totalSeasons])
     return Array.isArray(result) ? result[0] : result
 }
+
+export async function getContinueWatching() {
+    const query = `
+        SELECT * FROM Watched
+        WHERE ARRAY_LENGTH(watched_seasons, 1) < total_seasons
+        ORDER BY added_at DESC
+    `
+    const result = await dbWrapper(query)
+    return Array.isArray(result) ? result : []
+}
