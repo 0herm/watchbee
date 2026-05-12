@@ -9,6 +9,33 @@ CREATE TABLE IF NOT EXISTS Users (
     subscription TEXT DEFAULT NULL
 );
 
+-- Passkey credentials table
+CREATE TABLE IF NOT EXISTS Credentials (
+    id TEXT PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES Users(id) ON DELETE CASCADE,
+    public_key BYTEA NOT NULL,
+    counter BIGINT NOT NULL DEFAULT 0,
+    device_type TEXT NOT NULL DEFAULT 'singleDevice',
+    backed_up BOOLEAN NOT NULL DEFAULT FALSE,
+    transports TEXT[],
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Challenges table (temporary, per-request)
+CREATE TABLE IF NOT EXISTS Challenges (
+    id SERIAL PRIMARY KEY,
+    challenge TEXT NOT NULL UNIQUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Sessions table
+CREATE TABLE IF NOT EXISTS Sessions (
+    token TEXT PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES Users(id) ON DELETE CASCADE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP WITH TIME ZONE NOT NULL
+);
+
 -- Lists table
 CREATE TABLE IF NOT EXISTS Lists (
     id SERIAL PRIMARY KEY,
@@ -38,10 +65,5 @@ CREATE TABLE IF NOT EXISTS Watched (
 );
 
 -- Default lists
-INSERT INTO Lists (name) VALUES ('Watch')
-ON CONFLICT DO NOTHING;
-
--- Default user
-INSERT INTO Users
-VALUES (DEFAULT)
+INSERT INTO Lists (name) VALUES ('Want to Watch')
 ON CONFLICT DO NOTHING;

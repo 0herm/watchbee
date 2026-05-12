@@ -2,19 +2,19 @@ services:
   watchbee:
     container_name: watchbee
     build:
-      context: .
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     depends_on:
-      - postgres
-    environment:
-      - NEXT_TELEMETRY_DISABLED=1
-      - POSTGRES_HOST=postgres
+      - watchbee_database
+    env_file:
+      - .env
 
-  postgres:
-    image: postgres:latest
-    container_name: postgres
+  watchbee_database:
+  
+    image: postgres:18
+    container_name: watchbee_database
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -22,7 +22,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:

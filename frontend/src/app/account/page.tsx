@@ -1,0 +1,92 @@
+import { getAllLists, getMediaByListId, getAllWatched, getContinueWatching } from '@/utils/api'
+import MediaSection from '@/components/mediaSection/mediasection'
+import { getDetailsShow, getDetailsMovie } from '@/utils/tmdbApi'
+import { BookOpen } from 'lucide-react'
+import Link from 'next/link'
+
+async function fetchDetails(media: MediaProps | WatchedProps) {
+    if (media.type === 'show') {
+        const { data } = await getDetailsShow(media.tmdb_id)
+        return data ? { ...data, media_type: 'tv' as const } : null
+    }
+    const { data } = await getDetailsMovie(media.tmdb_id)
+    return data ? { ...data, media_type: 'movie' as const } : null
+}
+
+export default async function Page() {
+    const { data: listsData } = await getAllLists()
+    const lists: ListProps[] = listsData ?? []
+
+    const [listsMedia, watchedResults, continueWatchingResults] = await Promise.all([
+        Promise.all(lists.map(async (list) => {
+            const { data: mediaItems } = await getMediaByListId(list.id)
+            const results = (await Promise.all((mediaItems ?? []).map(fetchDetails))).filter(Boolean) as (ShowDetailsProps | MovieDetailsProps)[]
+            return { list, data: { page: 1, total_pages: 1, total_results: results.length, results } }
+        })),
+        getAllWatched().then(({ data }) => Promise.all((data ?? []).map(fetchDetails))),
+        getContinueWatching().then(({ data }) => Promise.all((data ?? []).map(fetchDetails))),
+    ])
+
+    const hasMedia =
+        watchedResults.some(Boolean) ||
+        continueWatchingResults.some(Boolean) ||
+        listsMedia.some((l) => l.data.results.length > 0)
+
+    return (
+        <div className='w-full flex flex-col gap-6'>
+            {hasMedia ? (
+                <div className='flex flex-col gap-6'>
+                    <MediaSection
+                        title='Continue Watching'
+                        lists={lists}
+                        items={{
+                            page: 1, total_pages: 1,
+                            total_results: continueWatchingResults.filter(Boolean).length,
+                            results: continueWatchingResults.filter(Boolean) as (ShowDetailsProps | MovieDetailsProps)[]
+                        }}
+                    />
+                    <MediaSection
+                        title='Watched'
+                        lists={lists}
+                        items={{
+                            page: 1, total_pages: 1,
+                            total_results: watchedResults.filter(Boolean).length,
+                            results: watchedResults.filter(Boolean) as (ShowDetailsProps | MovieDetailsProps)[]
+                        }}
+                    />
+                    {listsMedia.map((listMedia) => (
+                        <MediaSection
+                            key={listMedia.list.id}
+                            title={listMedia.list.name}
+                            lists={lists}
+                            items={listMedia.data}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <div className='flex flex-col items-center justify-center gap-4 py-20 text-center'>
+                    <div className='flex h-14 w-14 items-center justify-center rounded-2xl bg-muted'>
+                        <BookOpen className='h-7 w-7 text-muted-foreground' />
+                    </div>
+                    <div className='flex flex-col gap-1.5'>
+                        <p className='text-sm font-medium'>Your library is empty</p>
+                        <p className='text-xs text-muted-foreground max-w-xs'>
+                            Browse movies and shows and save them to your lists to see them here.
+                        </p>
+                    </div>
+                    <Link
+                        href='/'
+                        className={
+                            'inline-flex items-center gap-1.5 px-4 py-2 ' +
+                            'bg-brand hover:bg-brand-dim active:bg-brand-dimmer ' +
+                            'text-white rounded-md text-sm font-medium transition-colors'
+                        }
+                    >
+                        Browse
+                    </Link>
+                </div>
+            )}
+
+        </div>
+    )
+}
