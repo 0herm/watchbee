@@ -5,20 +5,19 @@ import config from '@config'
 import Link from 'next/link'
 import { Image as ImageIcon, Star, Bookmark, Eye, EyeOff } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { addMedia, removeMedia, checkMediaInList, addWatched, removeWatched, getWatchedById, updateWatchedSeasons, getShowTotalSeasons } from '@/utils/api'
+import { addMedia, removeMedia, checkMediaInList, addWatched, removeWatched, getWatchedById, updateWatchedSeasons, getShowTotalSeasons, getAllLists } from '@/utils/api'
 import { revalidate } from '@/components/dialog/actions'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/ui/dialog'
 import { Button } from '@/ui/button'
 
 interface MediaCardProps {
     item: MediaItemProps
-    lists: ListProps[]
     type?: MediaType
 }
 
-export default function MediaCard({ item, lists, type }: MediaCardProps) {
+export default function MediaCard({ item, type }: MediaCardProps) {
     const mediaType: MediaType = type ?? (item.media_type === 'tv' ? 'show' : 'movie')
-    const listId = lists[0]?.id
+    const [listId, setListId] = useState<number | undefined>(undefined)
 
     const title = ('title' in item ? item.title : null) ?? ('name' in item ? item.name : null) ?? ''
 
@@ -31,6 +30,10 @@ export default function MediaCard({ item, lists, type }: MediaCardProps) {
     const [watched, setWatched] = useState(false)
     const [watchedSeasons, setWatchedSeasons] = useState<number[]>([])
     const [totalSeasons, setTotalSeasons] = useState(0)
+
+    useEffect(() => {
+        getAllLists().then(({ data }) => setListId(data?.[0]?.id))
+    }, [])
 
     useEffect(() => {
         if (listId) checkMediaInList(item.id, listId).then(({ data }) => setInList(data ?? false))

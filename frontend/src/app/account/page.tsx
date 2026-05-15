@@ -43,7 +43,6 @@ export default async function Page() {
                 <div className='flex flex-col gap-6'>
                     <MediaSection
                         title='Continue Watching'
-                        lists={lists}
                         items={{
                             page: 1, total_pages: 1,
                             total_results: continueWatchingResults.filter(Boolean).length,
@@ -52,7 +51,6 @@ export default async function Page() {
                     />
                     <MediaSection
                         title='Watched'
-                        lists={lists}
                         items={{
                             page: 1, total_pages: 1,
                             total_results: watchedResults.filter(Boolean).length,
@@ -63,7 +61,6 @@ export default async function Page() {
                         <MediaSection
                             key={listMedia.list.id}
                             title={listMedia.list.name}
-                            lists={lists}
                             items={listMedia.data}
                         />
                     ))}

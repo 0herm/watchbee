@@ -5,13 +5,11 @@ import {
     getTopRatedMovies, getTopRatedShows,
     getUpcomingMovies, getUpcomingShows,
 } from '@/utils/tmdbApi'
-import { getAllLists } from '@/utils/api'
 import { getSessionUserId } from '@/utils/auth'
 import { redirect } from 'next/navigation'
 
 export default async function Home() {
-    const userId = await getSessionUserId()
-    if (!userId) redirect('/passkey/login')
+    if (!await getSessionUserId()) redirect('/passkey/login')
 
     const [
         trendingResult,
@@ -23,7 +21,6 @@ export default async function Home() {
         topRatedShowsResult,
         upcomingMoviesResult,
         upcomingShowsResult,
-        listsResult
     ] = await Promise.all([
         getTrending(),
         getNewMovies(),
@@ -34,10 +31,7 @@ export default async function Home() {
         getTopRatedShows(),
         getUpcomingMovies(),
         getUpcomingShows(),
-        getAllLists()
     ])
-
-    const lists: ListProps[] = listsResult.data ?? []
 
     const results = [
         trendingResult, newMoviesResult, newShowsResult,
@@ -61,15 +55,15 @@ export default async function Home() {
 
     return (
         <div className='flex flex-col gap-6 w-full overflow-hidden'>
-            <MediaSection title='Trending'        lists={lists} items={trendingResult.data} />
-            <MediaSection title='New Movies'      lists={lists} items={newMoviesResult.data}       type={'movie'} />
-            <MediaSection title='New Shows'       lists={lists} items={newShowsResult.data}        type={'show'} />
-            <MediaSection title='Popular Movies'  lists={lists} items={popularMoviesResult.data}   type={'movie'} />
-            <MediaSection title='Popular Shows'   lists={lists} items={popularShowsResult.data}    type={'show'} />
-            <MediaSection title='Top Rated Movies' lists={lists} items={topRatedMoviesResult.data} type={'movie'} />
-            <MediaSection title='Top Rated Shows'  lists={lists} items={topRatedShowsResult.data}  type={'show'} />
-            <MediaSection title='Upcoming Movies' lists={lists} items={upcomingMoviesResult.data}  type={'movie'} />
-            <MediaSection title='Upcoming Shows'  lists={lists} items={upcomingShowsResult.data}   type={'show'} />
+            <MediaSection title='Trending'        items={trendingResult.data} />
+            <MediaSection title='New Movies'      items={newMoviesResult.data}       type={'movie'} />
+            <MediaSection title='New Shows'       items={newShowsResult.data}        type={'show'} />
+            <MediaSection title='Popular Movies'  items={popularMoviesResult.data}   type={'movie'} />
+            <MediaSection title='Popular Shows'   items={popularShowsResult.data}    type={'show'} />
+            <MediaSection title='Top Rated Movies' items={topRatedMoviesResult.data} type={'movie'} />
+            <MediaSection title='Top Rated Shows'  items={topRatedShowsResult.data}  type={'show'} />
+            <MediaSection title='Upcoming Movies' items={upcomingMoviesResult.data}  type={'movie'} />
+            <MediaSection title='Upcoming Shows'  items={upcomingShowsResult.data}   type={'show'} />
         </div>
     )
 }

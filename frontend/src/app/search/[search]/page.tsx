@@ -1,5 +1,4 @@
 import MediaCard from '@/components/mediaCard/mediaCard'
-import { getAllLists } from '@/utils/api'
 import { getSearch } from '@/utils/tmdbApi'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
@@ -8,8 +7,7 @@ export default async function Page({ params }: { params: Promise<{ search: strin
     const param = (await params).search
     const query = decodeURIComponent(param)
 
-    const [{ data: searchResult }, { data: listsData }] = await Promise.all([getSearch(param), getAllLists()])
-    const lists: ListProps[] = listsData ?? []
+    const { data: searchResult } = await getSearch(param)
 
     const sortedResults = searchResult
         ? [...searchResult.results].sort((a, b) =>
@@ -39,7 +37,7 @@ export default async function Page({ params }: { params: Promise<{ search: strin
             {results.length > 0 ? (
                 <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3'>
                     {results.map((item, index) => (
-                        <MediaCard key={index} item={item} lists={lists} />
+                        <MediaCard key={index} item={item} />
                     ))}
                 </div>
             ) : (
