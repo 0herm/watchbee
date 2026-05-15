@@ -1,6 +1,8 @@
 import { getAllLists, getMediaByListId, getAllWatched, getContinueWatching } from '@/utils/api'
 import MediaSection from '@/components/mediaSection/mediasection'
 import { getDetailsShow, getDetailsMovie } from '@/utils/tmdbApi'
+import { getSessionUserId } from '@/utils/auth'
+import { redirect } from 'next/navigation'
 import { BookOpen } from 'lucide-react'
 import Link from 'next/link'
 
@@ -14,6 +16,9 @@ async function fetchDetails(media: MediaProps | WatchedProps) {
 }
 
 export default async function Page() {
+    const userId = await getSessionUserId()
+    if (!userId) redirect('/passkey/login')
+
     const { data: listsData } = await getAllLists()
     const lists: ListProps[] = listsData ?? []
 

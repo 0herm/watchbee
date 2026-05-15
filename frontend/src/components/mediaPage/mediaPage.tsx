@@ -3,7 +3,6 @@ import LoadImage from '@components/loadImage/loadimage'
 import { Globe, Star } from 'lucide-react'
 import Link from 'next/link'
 import ListTool from '../dialog/dialog'
-import { getAllLists } from '@/utils/api'
 import WatchedTool from '../dialog/watcheddialog'
 
 type MediaPageProps = {
@@ -11,7 +10,7 @@ type MediaPageProps = {
     media: 'movie' | 'show'
 }
 
-export default async function mediaPage({ item, media }: MediaPageProps) {
+export default function mediaPage({ item, media }: MediaPageProps) {
     const customOrder = ['flatrate', 'rent', 'buy']
     const regionProviders = (item['watch/providers']?.results[config.setting.REGION] ?? {}) as Record<string, unknown>
     const sortedProviders = Object.fromEntries(
@@ -26,9 +25,6 @@ export default async function mediaPage({ item, media }: MediaPageProps) {
     const title = media === 'movie' ? (item as MovieDetailsProps).title : (item as ShowDetailsProps).name
     const originalTitle =
         media === 'movie' ? (item as MovieDetailsProps).original_title : (item as ShowDetailsProps).original_name
-
-    const { data: listsData } = await getAllLists()
-    const lists: ListProps[] = listsData ?? []
 
     return (
         <div className='w-full flex flex-col gap-6'>
@@ -105,8 +101,8 @@ export default async function mediaPage({ item, media }: MediaPageProps) {
                             )}
 
                             <div className='flex justify-center sm:justify-start gap-2 pt-1'>
-                                <ListTool tmdbId={item.id} mediaType={media} lists={lists} />
-                                <WatchedTool tmdbID={item.id} mediaType={media} media={item} lists={lists} />
+                                <ListTool tmdbId={item.id} mediaType={media} />
+                                <WatchedTool tmdbID={item.id} mediaType={media} media={item} />
                             </div>
                         </div>
                     </div>

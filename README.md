@@ -31,4 +31,4 @@ To start the containers run:
 docker-compose up -d 
 ~~~ 
 
-Then go to: http://localhost:3000
+Then go to: http://localhost:3002

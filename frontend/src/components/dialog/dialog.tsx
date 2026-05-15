@@ -3,26 +3,25 @@
 import { useState, useEffect } from 'react'
 import { Bookmark } from 'lucide-react'
 import { Button } from '@/ui/button'
-import { addMedia, removeMedia, checkMediaInList } from '@/utils/api'
+import { addMedia, removeMedia, checkMediaInList, getAllLists } from '@/utils/api'
 import { revalidate } from './actions'
 
 type ListToolProps = {
     tmdbId: number
     mediaType: MediaType
-    lists: ListProps[]
 }
 
-export default function ListTool({ tmdbId, mediaType, lists = [] }: ListToolProps) {
+export default function ListTool({ tmdbId, mediaType }: ListToolProps) {
     const [inList, setInList] = useState<boolean>(false)
-    const listId = lists[0]?.id
+    const [listId, setListId] = useState<number | undefined>(undefined)
+
+    useEffect(() => {
+        getAllLists().then(({ data }) => setListId(data?.[0]?.id))
+    }, [])
 
     useEffect(() => {
         if (!listId) return
-        const fetchData = async () => {
-            const { data } = await checkMediaInList(tmdbId, listId)
-            setInList(data ?? false)
-        }
-        fetchData()
+        checkMediaInList(tmdbId, listId).then(({ data }) => setInList(data ?? false))
     }, [tmdbId, listId])
 
     async function handleToggle() {

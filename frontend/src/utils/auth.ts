@@ -16,7 +16,7 @@ import crypto from 'crypto'
 
 const RP_NAME = 'WatchBee'
 const RP_ID = process.env.RP_ID || 'localhost'
-const ORIGIN = process.env.ORIGIN || 'http://localhost:3000'
+const ORIGIN = process.env.ORIGIN || 'http://localhost:3002'
 const SESSION_DURATION_DAYS = 2
 
 async function saveChallenge(challenge: string) {

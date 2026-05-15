@@ -10,7 +10,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/ui/dialog'
-import { addWatched, getWatchedById, removeWatched, removeMedia, updateWatchedSeasons, updateShowStatus, updateTotalSeasons } from '@/utils/api'
+import { addWatched, getWatchedById, removeWatched, removeMedia, updateWatchedSeasons, updateShowStatus, updateTotalSeasons, getAllLists } from '@/utils/api'
 import { useEffect, useState } from 'react'
 import { revalidate } from './actions'
 
@@ -18,12 +18,16 @@ type ListToolProps = {
     tmdbID: number
     mediaType: MediaType
     media: MovieDetailsProps | ShowDetailsProps
-    lists?: ListProps[]
 }
 
-export default function WatchedTool({ tmdbID, mediaType, media, lists }: ListToolProps) {
+export default function WatchedTool({ tmdbID, mediaType, media }: ListToolProps) {
     const [seen, setSeen] = useState<WatchedProps | null>(null)
     const [watchedSeasons, setWatchedSeasons] = useState<number[]>([])
+    const [listId, setListId] = useState<number | undefined>(undefined)
+
+    useEffect(() => {
+        getAllLists().then(({ data }) => setListId(data?.[0]?.id))
+    }, [])
 
     const title = mediaType === 'movie' ? (media as MovieDetailsProps).title : (media as ShowDetailsProps).name
     const totalSeasons = mediaType === 'show' ? (media as ShowDetailsProps).number_of_seasons : undefined
@@ -65,7 +69,7 @@ export default function WatchedTool({ tmdbID, mediaType, media, lists }: ListToo
             if (error) { console.error(error); return }
             if (data) {
                 setSeen(data)
-                if (lists?.[0]?.id) await removeMedia(tmdbID, lists[0].id)
+                if (listId) await removeMedia(tmdbID, listId)
             }
         }
         revalidate('/account')
@@ -92,7 +96,7 @@ export default function WatchedTool({ tmdbID, mediaType, media, lists }: ListToo
                 if (error) { console.error(error); return }
                 if (data) {
                     setSeen(data)
-                    if (lists?.[0]?.id) await removeMedia(tmdbID, lists[0].id)
+                    if (listId) await removeMedia(tmdbID, listId)
                 }
             }
         }
