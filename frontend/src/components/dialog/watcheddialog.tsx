@@ -10,9 +10,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/ui/dialog'
-import { addWatched, getWatchedById, removeWatched, removeMedia, updateWatchedSeasons, updateShowStatus, updateTotalSeasons, getAllLists } from '@/utils/api'
+import { addWatched, getWatchedById, removeWatched, removeMedia, updateWatchedSeasons, updateShowStatus, updateTotalSeasons, getAllLists } from '@/utils/clientApi'
 import { useEffect, useState } from 'react'
-import { revalidate } from './actions'
 
 type ListToolProps = {
     tmdbID: number
@@ -72,7 +71,6 @@ export default function WatchedTool({ tmdbID, mediaType, media }: ListToolProps)
                 if (listId) await removeMedia(tmdbID, listId)
             }
         }
-        revalidate('/account')
     }
 
     function handleSeasonToggle(season: number) {

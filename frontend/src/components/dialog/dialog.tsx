@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Bookmark } from 'lucide-react'
 import { Button } from '@/ui/button'
-import { addMedia, removeMedia, checkMediaInList, getAllLists } from '@/utils/api'
-import { revalidate } from './actions'
+import { addMedia, removeMedia, checkMediaInList, getAllLists } from '@/utils/clientApi'
 
 type ListToolProps = {
     tmdbId: number
@@ -29,11 +28,11 @@ export default function ListTool({ tmdbId, mediaType }: ListToolProps) {
         if (inList) {
             const { data, error } = await removeMedia(tmdbId, listId)
             if (error) { console.error(error); return }
-            if (data) { setInList(false); revalidate('/account') }
+            if (data) { setInList(false) }
         } else {
             const { data, error } = await addMedia(tmdbId, mediaType, listId)
             if (error) { console.error(error); return }
-            if (data) { setInList(true); revalidate('/account') }
+            if (data) { setInList(true) }
         }
     }
 

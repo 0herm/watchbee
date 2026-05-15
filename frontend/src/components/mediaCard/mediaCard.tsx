@@ -5,8 +5,7 @@ import config from '@config'
 import Link from 'next/link'
 import { Image as ImageIcon, Star, Bookmark, Eye, EyeOff } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { addMedia, removeMedia, checkMediaInList, addWatched, removeWatched, getWatchedById, updateWatchedSeasons, getShowTotalSeasons, getAllLists } from '@/utils/api'
-import { revalidate } from '@/components/dialog/actions'
+import { addMedia, removeMedia, checkMediaInList, addWatched, removeWatched, getWatchedById, updateWatchedSeasons, getShowTotalSeasons, getAllLists } from '@/utils/clientApi'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/ui/dialog'
 import { Button } from '@/ui/button'
 
@@ -48,11 +47,11 @@ export default function MediaCard({ item, type }: MediaCardProps) {
         if (inList) {
             const { data, error } = await removeMedia(item.id, listId)
             if (error) { console.error(error); return }
-            if (data) { setInList(false); revalidate('/account') }
+            if (data) setInList(false)
         } else {
             const { data, error } = await addMedia(item.id, mediaType, listId)
             if (error) { console.error(error); return }
-            if (data) { setInList(true); revalidate('/account') }
+            if (data) setInList(true)
         }
     }
 
@@ -60,14 +59,13 @@ export default function MediaCard({ item, type }: MediaCardProps) {
         if (watched) {
             const { data, error } = await removeWatched(item.id)
             if (error) { console.error(error); return }
-            if (data) { setWatched(false); revalidate('/account') }
+            if (data) setWatched(false)
         } else {
             const { data, error } = await addWatched(item.id, mediaType, title)
             if (error) { console.error(error); return }
             if (data) {
                 setWatched(true)
                 if (inList && listId) { await removeMedia(item.id, listId); setInList(false) }
-                revalidate('/account')
             }
         }
     }
@@ -75,7 +73,8 @@ export default function MediaCard({ item, type }: MediaCardProps) {
     async function fetchSeasonData() {
         if (totalSeasons) return
         const existing = (item as { number_of_seasons?: number }).number_of_seasons
-        setTotalSeasons(existing || await getShowTotalSeasons(item.id))
+        const { data } = existing ? { data: existing } : await getShowTotalSeasons(item.id)
+        setTotalSeasons(data ?? 0)
     }
 
     async function closeShowDialog() {
@@ -93,7 +92,6 @@ export default function MediaCard({ item, type }: MediaCardProps) {
                 if (inList && listId) { await removeMedia(item.id, listId); setInList(false) }
             }
         }
-        revalidate('/account')
     }
 
     function handleSeasonToggle(season: number) {
