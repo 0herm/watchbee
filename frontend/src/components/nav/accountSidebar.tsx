@@ -21,7 +21,7 @@ export default function AccountSidebar({ logoutAction }: { logoutAction: () => P
     return (
         <>
             {/* Mobile — horizontal scroll tab bar */}
-            <nav className='sm:hidden -mx-5 border-b border-border/40 bg-background'>
+            <nav className='sm:hidden -mx-5 border-b border-border/40 bg-background' style={{ viewTransitionName: 'account-nav' }}>
                 <div className='flex overflow-x-auto noscroll px-3 py-1.5 gap-1'>
                     {navItems.map(({ href, icon: Icon, label }, i) => {
                         const active = i === activeIndex
@@ -62,6 +62,7 @@ export default function AccountSidebar({ logoutAction }: { logoutAction: () => P
                 style={{
                     top: 'calc(3.5rem + env(safe-area-inset-top, 0px))',
                     height: 'calc(100vh - 3.5rem - env(safe-area-inset-top, 0px) - 1.25rem)',
+                    viewTransitionName: 'account-sidebar',
                 }}
             >
                 <nav className='relative flex flex-col gap-0.5'>

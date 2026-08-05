@@ -23,10 +23,9 @@ type MediaPageProps = {
     language?: string | null
     collection?: CollectionProps | null
     watchedInSimilar?: number
-    ambient?: string | null
 }
 
-export default function MediaPage({ item, media, similar, region, language, collection, watchedInSimilar, ambient }: MediaPageProps) {
+export default function MediaPage({ item, media, similar, region, language, collection, watchedInSimilar }: MediaPageProps) {
     const movie = media === 'movie' ? item as MovieDetailsProps : null
     const show  = media === 'show'  ? item as ShowDetailsProps  : null
 
@@ -47,7 +46,7 @@ export default function MediaPage({ item, media, similar, region, language, coll
     const content = (
         <div
             className='relative w-full flex flex-col'
-            style={ambient ? { '--ambient': ambient } as React.CSSProperties : undefined}
+            data-ambient={item.id}
         >
             <div
                 aria-hidden

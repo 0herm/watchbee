@@ -211,6 +211,7 @@ dialog[open]::backdrop {
         color: oklch(0.1 0 0);
     }
     html, body {
+        overscroll-behavior-y: none;
         -ms-overflow-style: none;
         scrollbar-width: none;
         &::-webkit-scrollbar {
@@ -277,17 +278,27 @@ html.vt-back::view-transition-new(media-backdrop) {
 }
 
 ::view-transition-group(site-header),
-::view-transition-group(bottom-nav) {
+::view-transition-group(bottom-nav),
+::view-transition-group(account-sidebar),
+::view-transition-group(account-nav) {
     animation: none;
     z-index: 20;
 }
 ::view-transition-old(site-header),
-::view-transition-old(bottom-nav) {
+::view-transition-old(bottom-nav),
+::view-transition-old(account-sidebar),
+::view-transition-old(account-nav) {
     display: none;
 }
 ::view-transition-new(site-header),
-::view-transition-new(bottom-nav) {
+::view-transition-new(bottom-nav),
+::view-transition-new(account-sidebar),
+::view-transition-new(account-nav) {
     animation: none;
+}
+
+@media (display-mode: standalone) {
+    .hide-in-app { display: none !important; }
 }
 
 /* Reduced motion */

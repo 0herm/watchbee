@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import config from '@config'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Image as ImageIcon, Star, Bookmark, Eye, EyeOff } from 'lucide-react'
 import { useRef, useState, useLayoutEffect } from 'react'
 import { addMedia, removeMedia, addWatched, removeWatched, getShowDetails } from '@/utils/queries'
@@ -27,9 +28,18 @@ interface MediaCardProps {
 }
 
 export default function MediaCard({ item, type, progress }: MediaCardProps) {
+    const router = useRouter()
     const ms = useMediaState()
     const mediaType: MediaType = type ?? (item.media_type === 'tv' ? 'show' : 'movie')
     const listId = ms?.listId
+    const href = `/${mediaType}/${item.id}`
+    const prefetched = useRef(false)
+
+    function prefetchOnce() {
+        if (prefetched.current) return
+        prefetched.current = true
+        router.prefetch(href)
+    }
 
     const streamingProviders = ms?.streamingProviders ?? []
     const region = ms?.region ?? 'GB'
@@ -57,6 +67,8 @@ export default function MediaCard({ item, type, progress }: MediaCardProps) {
     useLayoutEffect(() => {
         const key = sessionStorage.getItem('vt-poster-id')
         if (!key || !posterRef.current) return
+        const origin = sessionStorage.getItem('vt-origin')
+        if (origin && origin !== window.location.pathname + window.location.search) return
         const [id, index] = key.split(':')
         if (id !== String(item.id)) return
         const nodes = document.querySelectorAll(`[data-vt-id="${id}"]`)
@@ -130,7 +142,7 @@ export default function MediaCard({ item, type, progress }: MediaCardProps) {
 
     return (
         <div className='group relative w-full' onMouseEnter={loadShowDetails} onFocus={loadShowDetails}>
-            <Link href={`/${mediaType}/${item.id}`} onClick={armTransition}>
+            <Link href={href} onClick={armTransition} onPointerDown={prefetchOnce} onTouchStart={prefetchOnce}>
                 <div
                     ref={posterRef}
                     data-vt-id={item.id}
@@ -138,10 +150,9 @@ export default function MediaCard({ item, type, progress }: MediaCardProps) {
                 >
                     {item.poster_path ? (
                         <Image
-                            src={`${config.url.IMAGE_URL}${item.poster_path}`}
+                            src={`${config.url.POSTER_URL}${item.poster_path}`}
                             alt={title || 'poster'}
                             fill
-                            loading='eager'
                             className={'object-cover transition-transform duration-300 group-hover:scale-[1.04] ' +
                                 'bg-muted flex items-center justify-center text-center text-xs text-muted-foreground'}
                             sizes='(max-width: 640px) 45vw, (max-width: 1024px) 20vw, 11rem'
@@ -161,11 +172,13 @@ export default function MediaCard({ item, type, progress }: MediaCardProps) {
                     {matchedProviders.length > 0 && (
                         <div className='absolute top-1.5 left-1.5 flex items-center gap-0.5 bg-black/60 backdrop-blur-sm rounded-md px-1 py-1 z-10'>
                             {matchedProviders.slice(0, 2).map((p) => (
-                                <img
+                                <Image
                                     key={p.provider_id}
                                     src={`https://image.tmdb.org/t/p/w92${p.logo_path}`}
                                     alt={p.provider_name}
                                     title={p.provider_name}
+                                    width={18}
+                                    height={18}
                                     className='h-[1.125rem] w-[1.125rem] rounded-[3px] object-cover'
                                 />
                             ))}

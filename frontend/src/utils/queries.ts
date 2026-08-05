@@ -60,6 +60,12 @@ export async function getAllLists(): Promise<ApiResult<ListProps[]>> {
     return dbWrapper<ListProps>('SELECT * FROM Lists ORDER BY created_at DESC')
 }
 
+export async function getNotifications(): Promise<ApiResult<NotificationEntry[]>> {
+    return dbWrapper<NotificationEntry>(
+        'SELECT id, type, tmdb_id, notif_title, notif_body, notif_url, sent_at FROM NotificationLog WHERE notif_title IS NOT NULL ORDER BY sent_at DESC LIMIT 30'
+    )
+}
+
 export async function getDefaultList(): Promise<ApiResult<ListProps | null>> {
     const { data, error } = await dbWrapper<ListProps>('SELECT * FROM Lists ORDER BY created_at ASC LIMIT 1')
     return { data: data?.[0] ?? null, error }

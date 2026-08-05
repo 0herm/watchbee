@@ -1,6 +1,7 @@
+import { Suspense } from 'react'
 import MediaPage from '@/components/media/mediaPage'
+import AmbientStyle from '@/components/media/ambientStyle'
 import { getDetailsMovie, getSimilarMovies, getMovieCollection } from '@/utils/tmdbApi'
-import { getAmbientColor } from '@/utils/ambient'
 import { getSessionUserId } from '@/utils/auth'
 import { getUserSettings, getAllWatched, getDefaultListState } from '@/utils/queries'
 import { MediaStateProvider } from '@/components/watched/mediaStateContext'
@@ -12,7 +13,7 @@ export default async function Page({ params }: { params: Promise<{ id: number }>
 
     if (error || !data) throw new Error('Error loading movie')
 
-    const [{ data: similar }, { data: settings }, { data: collection }, { data: watchedData }, listState, ambient] = await Promise.all([
+    const [{ data: similar }, { data: settings }, { data: collection }, { data: watchedData }, listState] = await Promise.all([
         getSimilarMovies(id),
         userId ? getUserSettings(userId) : Promise.resolve({ data: null, error: null }),
         data.belongs_to_collection
@@ -20,7 +21,6 @@ export default async function Page({ params }: { params: Promise<{ id: number }>
             : Promise.resolve({ data: null, error: null }),
         getAllWatched(),
         getDefaultListState(),
-        getAmbientColor(data.poster_path),
     ])
 
     const watchedIdList = (watchedData ?? []).map(w => w.tmdb_id)
@@ -33,10 +33,12 @@ export default async function Page({ params }: { params: Promise<{ id: number }>
             watchedIds={watchedIdList}
             listedIds={listState.listedIds}
         >
+            <Suspense fallback={null}>
+                <AmbientStyle scope={data.id} path={data.poster_path} />
+            </Suspense>
             <MediaPage
                 item={data} media='movie' similar={similar} region={settings?.region}
                 language={settings?.language} collection={collection} watchedInSimilar={watchedInSimilar}
-                ambient={ambient}
             />
         </MediaStateProvider>
     )

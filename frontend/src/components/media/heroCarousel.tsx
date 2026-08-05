@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Star, Play } from 'lucide-react'
+import { Star } from 'lucide-react'
 import config from '@config'
 import { armSharedElement, rememberOrigin } from '@/utils/viewTransition'
 
@@ -104,6 +104,16 @@ export default function HeroCarousel({ items, ambient = {} }: {
                                 />
                             )}
 
+                            <Link
+                                href={`/${mediaType}/${item.id}`}
+                                onClick={(e) => {
+                                    armSharedElement('media-backdrop', e.currentTarget.closest<HTMLElement>('[data-hero-slide]')!)
+                                    rememberOrigin('backdrop', String(item.id))
+                                }}
+                                className='absolute inset-0 z-[1]'
+                                aria-label={title}
+                            />
+
                             <div className='absolute bottom-0 left-0 p-5 pb-8 sm:p-10 sm:pb-12 max-w-[80%] sm:max-w-[55%]'>
                                 <h2
                                     className={
@@ -114,7 +124,7 @@ export default function HeroCarousel({ items, ambient = {} }: {
                                 >
                                     {title}
                                 </h2>
-                                <div className='flex items-center gap-2.5 text-xs font-medium tracking-wide text-white/55 mb-4'>
+                                <div className='flex items-center gap-2.5 text-xs font-medium tracking-wide text-white/55'>
                                     {rating && (
                                         <span className='flex items-center gap-1 text-white/85 tabular-nums'>
                                             <Star className='h-3 w-3 fill-yellow-400 stroke-none' />
@@ -124,21 +134,6 @@ export default function HeroCarousel({ items, ambient = {} }: {
                                     {year && <span className='tabular-nums'>{year}</span>}
                                     <span className='capitalize opacity-70'>{mediaType}</span>
                                 </div>
-                                <Link
-                                    href={`/${mediaType}/${item.id}`}
-                                    onClick={(e) => {
-                                        const slide = e.currentTarget.closest<HTMLElement>('[data-hero-slide]')
-                                        if (slide) armSharedElement('media-backdrop', slide)
-                                        rememberOrigin('backdrop', String(item.id))
-                                    }}
-                                    className={
-                                        'inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass border border-white/15 ' +
-                                        'hover:bg-white/10 active:bg-white/15 text-white text-sm font-semibold transition-colors'
-                                    }
-                                >
-                                    <Play className='h-3 w-3 fill-current shrink-0' />
-                                    View
-                                </Link>
                             </div>
                         </div>
                     )

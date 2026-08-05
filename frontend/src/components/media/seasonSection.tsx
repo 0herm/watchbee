@@ -52,7 +52,7 @@ export default function SeasonSection({ showId, seasons }: Props) {
                         <div className='relative aspect-[2/3] w-full bg-muted overflow-hidden'>
                             {season.poster_path
                                 ? <Image
-                                    src={`${config.url.IMAGE_URL}${season.poster_path}`}
+                                    src={`${config.url.POSTER_URL}${season.poster_path}`}
                                     alt={season.name} fill
                                     sizes='(max-width: 640px) 28vw, 8rem'
                                     className={'object-cover transition-transform duration-300 group-hover:scale-[1.03] ' +

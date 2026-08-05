@@ -4,6 +4,7 @@ const config = {
     url: {
         API_URL:    'https://api.themoviedb.org/',
         IMAGE_URL:  'https://image.tmdb.org/t/p/w500',
+        POSTER_URL: 'https://image.tmdb.org/t/p/w342',
         BACKDROP_URL: 'https://image.tmdb.org/t/p/original'
     },
     database: {

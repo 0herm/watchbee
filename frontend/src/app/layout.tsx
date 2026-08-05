@@ -8,6 +8,7 @@ import HeaderShell from '@/components/nav/headerShell'
 import BottomNav from '@/components/nav/bottomNav'
 import Footer from '@/components/nav/footer'
 import ScrollRestorer from '@/components/nav/scrollRestorer'
+import ServiceWorkerRegistrar from '@/components/pwa/serviceWorkerRegistrar'
 
 const archivo = Archivo({ subsets: ['latin'], display: 'swap', variable: '--font-archivo', axes: ['wdth'] })
 const instrumentSans = Instrument_Sans({ subsets: ['latin'], display: 'swap', variable: '--font-instrument-sans' })
@@ -37,8 +38,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     return (
         <html lang='en' className={`dark bg-background ${archivo.variable} ${instrumentSans.variable}`}>
             <head />
-            <body className='w-screen min-h-screen m-0 p-0 font-sans antialiased wrap-break-word leading-normal tracking-normal'>
-                <div className='relative flex flex-col w-full min-h-screen'>
+            <body className='w-screen min-h-dvh m-0 p-0 font-sans antialiased wrap-break-word leading-normal tracking-normal'>
+                <div className='relative flex flex-col w-full min-h-dvh'>
+                    <ServiceWorkerRegistrar />
                     <HeaderShell>
                         <NavBar />
                     </HeaderShell>
