@@ -4,7 +4,7 @@ type BadgeVariant = 'default' | 'glass' | 'brand' | 'ambient' | 'outline'
 
 const variantClasses: Record<BadgeVariant, string> = {
     default: 'bg-surface-3 text-foreground/90',
-    glass:   'bg-black/60 backdrop-blur-sm text-white',
+    glass:   'bg-black/70 sm:bg-black/60 sm:backdrop-blur-sm text-white',
     brand:   'bg-brand/15 text-brand',
     ambient: 'bg-ambient/15 text-ambient',
     outline: 'border border-border-strong text-foreground/80',

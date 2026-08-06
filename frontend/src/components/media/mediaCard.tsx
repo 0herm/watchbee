@@ -170,7 +170,7 @@ export default function MediaCard({ item, type, progress }: MediaCardProps) {
                     )}
                     <div className='absolute inset-0 bg-linear-to-t from-black/50 via-black/10 to-transparent pointer-events-none' />
                     {matchedProviders.length > 0 && (
-                        <div className='absolute top-1.5 left-1.5 flex items-center gap-0.5 bg-black/60 backdrop-blur-sm rounded-md px-1 py-1 z-10'>
+                        <div className='absolute top-1.5 left-1.5 flex items-center gap-0.5 bg-black/70 sm:bg-black/60 sm:backdrop-blur-sm rounded-md px-1 py-1 z-10'>
                             {matchedProviders.slice(0, 2).map((p) => (
                                 <Image
                                     key={p.provider_id}

@@ -66,7 +66,7 @@ export default function MediaPage({ item, media, similar, region, language, coll
                             alt=''
                             fill
                             priority
-                            className='object-cover opacity-60 blur-sm [will-change:filter]'
+                            className='object-cover opacity-60 blur-sm'
                             style={{ objectPosition: 'center 25%' }}
                             sizes='100vw'
                             quality={75}
