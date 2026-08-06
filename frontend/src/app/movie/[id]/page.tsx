@@ -1,7 +1,8 @@
 import { Suspense } from 'react'
 import MediaPage from '@/components/media/mediaPage'
 import AmbientStyle from '@/components/media/ambientStyle'
-import { getDetailsMovie, getSimilarMovies, getMovieCollection } from '@/utils/tmdbApi'
+import MediaExtras, { MediaExtrasSkeleton } from '@/components/media/mediaExtras'
+import { getDetailsMovie } from '@/utils/tmdbApi'
 import { getSessionUserId } from '@/utils/auth'
 import { getUserSettings, getAllWatched, getDefaultListState } from '@/utils/queries'
 import { MediaStateProvider } from '@/components/watched/mediaStateContext'
@@ -13,19 +14,13 @@ export default async function Page({ params }: { params: Promise<{ id: number }>
 
     if (error || !data) throw new Error('Error loading movie')
 
-    const [{ data: similar }, { data: settings }, { data: collection }, { data: watchedData }, listState] = await Promise.all([
-        getSimilarMovies(id),
+    const [{ data: settings }, { data: watchedData }, listState] = await Promise.all([
         userId ? getUserSettings(userId) : Promise.resolve({ data: null, error: null }),
-        data.belongs_to_collection
-            ? getMovieCollection(data.belongs_to_collection.id)
-            : Promise.resolve({ data: null, error: null }),
         getAllWatched(),
         getDefaultListState(),
     ])
 
     const watchedIdList = (watchedData ?? []).map(w => w.tmdb_id)
-    const watchedIds = new Set(watchedIdList)
-    const watchedInSimilar = similar?.results.filter(r => watchedIds.has(r.id)).length ?? 0
 
     return (
         <MediaStateProvider
@@ -37,8 +32,16 @@ export default async function Page({ params }: { params: Promise<{ id: number }>
                 <AmbientStyle scope={data.id} path={data.poster_path} />
             </Suspense>
             <MediaPage
-                item={data} media='movie' similar={similar} region={settings?.region}
-                language={settings?.language} collection={collection} watchedInSimilar={watchedInSimilar}
+                item={data} media='movie' region={settings?.region} language={settings?.language}
+                extras={
+                    <Suspense fallback={<MediaExtrasSkeleton />}>
+                        <MediaExtras
+                            id={id} media='movie'
+                            collectionId={data.belongs_to_collection?.id}
+                            watchedIds={watchedIdList}
+                        />
+                    </Suspense>
+                }
             />
         </MediaStateProvider>
     )

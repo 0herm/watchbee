@@ -8,7 +8,6 @@ import WatchedTool from '@/components/watched/watchedDialog'
 import { TrailerButton } from '@/components/media/trailerButton'
 import ExpandableText from '@/components/media/expandableText'
 import HeroBackdrop from '@/components/media/heroBackdrop'
-import MediaSection from '@/components/media/mediaSection'
 import SeasonSection from '@/components/media/seasonSection'
 import SectionHeading from '@/components/media/sectionHeading'
 import { WatchedProvider } from '@/components/watched/watchedContext'
@@ -18,14 +17,12 @@ import BackButton from '@/components/nav/backButton'
 type MediaPageProps = {
     item: MovieDetailsProps | ShowDetailsProps
     media: 'movie' | 'show'
-    similar?: MediaListProps | null
     region?: string | null
     language?: string | null
-    collection?: CollectionProps | null
-    watchedInSimilar?: number
+    extras?: React.ReactNode
 }
 
-export default function MediaPage({ item, media, similar, region, language, collection, watchedInSimilar }: MediaPageProps) {
+export default function MediaPage({ item, media, region, language, extras }: MediaPageProps) {
     const movie = media === 'movie' ? item as MovieDetailsProps : null
     const show  = media === 'show'  ? item as ShowDetailsProps  : null
 
@@ -264,28 +261,7 @@ export default function MediaPage({ item, media, similar, region, language, coll
                         </div>
                     </section>
 
-                    {collection && collection.parts.length > 0 && (
-                        <MediaSection
-                            title={collection.name}
-                            items={[...collection.parts].sort((a, b) => +new Date(a.release_date ?? '') - +new Date(b.release_date ?? ''))}
-                            type='movie'
-                        />
-                    )}
-
-                    {similar && similar.results.length > 0 && (
-                        <MediaSection
-                            title={
-                                <span className='flex items-baseline gap-2'>
-                                    More Like This
-                                    {watchedInSimilar != null && watchedInSimilar > 0 && (
-                                        <span className='text-xs font-normal text-ambient'>{watchedInSimilar} watched</span>
-                                    )}
-                                </span>
-                            }
-                            items={similar}
-                            type={media}
-                        />
-                    )}
+                    {extras}
                 </div>
             </div>
         </div>
