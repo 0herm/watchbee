@@ -8,6 +8,7 @@ import HeaderShell from '@/components/nav/headerShell'
 import BottomNav from '@/components/nav/bottomNav'
 import Footer from '@/components/nav/footer'
 import ScrollRestorer from '@/components/nav/scrollRestorer'
+import MobileViewTransitions from '@/components/nav/mobileViewTransitions'
 import ServiceWorkerRegistrar from '@/components/pwa/serviceWorkerRegistrar'
 
 const archivo = Archivo({ subsets: ['latin'], display: 'swap', variable: '--font-archivo', axes: ['wdth'] })
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <body className='w-screen min-h-dvh m-0 p-0 font-sans antialiased wrap-break-word leading-normal tracking-normal'>
                 <div className='relative flex flex-col w-full min-h-dvh'>
                     <ServiceWorkerRegistrar />
+                    <MobileViewTransitions />
                     <HeaderShell>
                         <NavBar />
                     </HeaderShell>
