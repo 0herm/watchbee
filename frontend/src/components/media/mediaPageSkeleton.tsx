@@ -40,7 +40,7 @@ export function MediaPageSkeleton({ isShow = false }: { isShow?: boolean }) {
         <div className='relative w-full flex flex-col'>
 
             {/* Hero */}
-            <div className='relative w-full flex flex-col justify-end overflow-hidden min-h-[55vh] sm:min-h-[min(72vh,43.75rem)]'>
+            <div className='relative w-full flex flex-col justify-end overflow-hidden min-h-[60vh] sm:min-h-[min(72vh,43.75rem)]'>
                 <div className='absolute inset-0'>
                     {hero?.backdrop ? (
                         <Image
@@ -57,7 +57,7 @@ export function MediaPageSkeleton({ isShow = false }: { isShow?: boolean }) {
                 </div>
 
                 <div className='relative z-10 w-full px-5 sm:px-6'>
-                    <div className='max-w-6xl mx-auto flex items-end gap-8 pb-8 sm:pb-12'>
+                    <div className='max-w-6xl mx-auto flex items-end gap-8 pb-8 sm:pb-12 pt-[calc(3.5rem_+_env(safe-area-inset-top,0px)_+_3.5rem)] sm:pt-0'>
                         <div
                             className='hidden sm:block relative w-36 md:w-44 aspect-[2/3] rounded-2xl overflow-hidden bg-muted shrink-0'
                             style={{ viewTransitionName: 'active-poster' } as React.CSSProperties}
