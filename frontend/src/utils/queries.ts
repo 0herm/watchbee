@@ -146,6 +146,27 @@ export async function updateWatched(tmdbId: number, fields: {
     return { data: data?.[0] ?? null, error }
 }
 
+export async function setRating(
+    tmdbId: number, type: 'movie' | 'show', name: string, rating: number | null
+): Promise<ApiResult<WatchedProps | null>> {
+    const { data: existing } = await getWatchedById(tmdbId)
+    if (existing) {
+        const { data, error } = await dbWrapper<WatchedProps>(
+            'UPDATE Watched SET rating = $2 WHERE tmdb_id = $1 RETURNING *', [tmdbId, rating]
+        )
+        return { data: data?.[0] ?? null, error }
+    }
+    const { data, error } = await dbWrapper<WatchedProps>(
+        'INSERT INTO Watched (tmdb_id, type, name, rating) VALUES ($1, $2, $3, $4) RETURNING *',
+        [tmdbId, type, name, rating]
+    )
+    return { data: data?.[0] ?? null, error }
+}
+
+export async function getUnratedWatched(): Promise<ApiResult<WatchedProps[]>> {
+    return dbWrapper<WatchedProps>('SELECT * FROM Watched WHERE rating IS NULL ORDER BY added_at DESC')
+}
+
 export async function getDefaultListState(): Promise<{ listId: number | undefined; listedIds: number[] }> {
     const { data: list } = await getDefaultList()
     if (!list?.id) return { listId: undefined, listedIds: [] }

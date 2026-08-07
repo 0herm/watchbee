@@ -78,11 +78,15 @@ export function SurpriseButton({ items }: { items: Candidate[] }) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <button className={
-                    'inline-flex items-center gap-1.5 h-8 px-3 rounded-xl border border-border/60' +
-                    ' bg-card text-muted-foreground/70 hover:text-foreground hover:bg-muted text-xs font-medium transition-colors'
-                }>
-                    <Shuffle className='h-3.5 w-3.5 shrink-0' />Surprise me
+                <button
+                    aria-label='Surprise me'
+                    className={
+                        'inline-flex items-center gap-1.5 h-8 px-2.5 xs:px-3 rounded-xl border border-border/60 shrink-0 whitespace-nowrap' +
+                        ' bg-card text-muted-foreground/70 hover:text-foreground hover:bg-muted text-xs font-medium transition-colors'
+                    }
+                >
+                    <Shuffle className='h-3.5 w-3.5 shrink-0' />
+                    <span className='hidden xs:inline'>Surprise me</span>
                 </button>
             </DialogTrigger>
             <DialogContent className='max-w-sm'>

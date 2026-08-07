@@ -5,6 +5,7 @@ import { Film, Globe, Image as ImageIcon, Star, Tv } from 'lucide-react'
 import Link from 'next/link'
 import ListTool from '@/components/watched/dialog'
 import WatchedTool from '@/components/watched/watchedDialog'
+import RatingTool from '@/components/rating/ratingTool'
 import { TrailerButton } from '@/components/media/trailerButton'
 import ExpandableText from '@/components/media/expandableText'
 import HeroBackdrop from '@/components/media/heroBackdrop'
@@ -159,6 +160,7 @@ export default function MediaPage({ item, media, region, language, extras }: Med
                                     </Link>
                                 )}
                             </div>
+                            <RatingTool tmdbID={item.id} mediaType={media} title={title} />
                         </div>
                     </div>
                 </div>

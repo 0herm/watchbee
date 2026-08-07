@@ -179,6 +179,7 @@ type WatchedProps = {
     total_seasons?: number
     show_status?: string
     episode_counts?: number[]
+    rating?: number | null
 }
 
 interface NotificationEntry {

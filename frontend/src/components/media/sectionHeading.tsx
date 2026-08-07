@@ -12,15 +12,15 @@ export default function SectionHeading({ children, count, action, eyebrow = fals
         <div className='flex items-baseline gap-2'>
             <h2
                 className={eyebrow
-                    ? 'text-[11px] font-bold tracking-[0.1em] uppercase text-muted-foreground shrink-0'
-                    : 'display text-lg sm:text-xl font-semibold text-foreground shrink-0'}
+                    ? 'text-[11px] font-bold tracking-[0.1em] uppercase text-muted-foreground min-w-0 truncate'
+                    : 'display text-lg sm:text-xl font-semibold text-foreground min-w-0 truncate'}
             >
                 {children}
             </h2>
             {count != null && (
                 <span className='text-[11px] text-muted-foreground/50 tabular-nums font-medium shrink-0'>{count}</span>
             )}
-            {action && <div className='ml-auto self-center'>{action}</div>}
+            {action && <div className='ml-auto self-center shrink-0'>{action}</div>}
         </div>
     )
 }
