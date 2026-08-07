@@ -52,7 +52,7 @@ export default function MediaPage({ item, media, region, language, extras }: Med
                 style={{ background: 'radial-gradient(90% 70% at 50% 0%, color-mix(in oklab, var(--ambient) 8%, transparent), transparent 75%)' }}
             />
 
-            <div className='relative w-full flex flex-col justify-end overflow-hidden min-h-[55vh] sm:min-h-[min(72vh,43.75rem)]'>
+            <div className='relative w-full flex flex-col justify-end overflow-hidden min-h-[60vh] sm:min-h-[min(72vh,43.75rem)]'>
                 <BackButton
                     className='absolute z-20 left-5 sm:left-6'
                     style={{ top: 'calc(3.5rem + env(safe-area-inset-top, 0px) + 0.75rem)' }}
@@ -82,7 +82,7 @@ export default function MediaPage({ item, media, region, language, extras }: Med
                 </HeroBackdrop>
 
                 <div className='relative z-10 w-full px-5 sm:px-6'>
-                    <div className='max-w-6xl mx-auto flex items-end gap-8 pb-8 sm:pb-12'>
+                    <div className='max-w-6xl mx-auto flex items-end gap-8 pb-8 sm:pb-12 pt-[calc(3.5rem_+_env(safe-area-inset-top,0px)_+_3.5rem)] sm:pt-0'>
                         {item.poster_path && (
                             <div
                                 className={

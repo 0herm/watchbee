@@ -11,8 +11,11 @@ import {
 } from '@/utils/tmdbApi'
 import { getFilteredContinueWatching } from '@/utils/continueWatching'
 import { getAllWatched, getDefaultList, getMediaByListId, getUserSettings } from '@/utils/queries'
+import { getTopPicks } from '@/utils/recommendations'
 import { getSessionUserId } from '@/utils/auth'
 import { redirect } from 'next/navigation'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { MediaStateProvider } from '@/components/watched/mediaStateContext'
 import PageContainer from '@/components/pageContainer'
 import { getAmbientColor } from '@/utils/ambient'
@@ -149,6 +152,21 @@ export default async function Home() {
         progressMap.set(show.id, Math.min(watchedEps / totalAired, 0.97))
     }
 
+    const topPicks = await getTopPicks(
+        watchedResult.data ?? [],
+        [...(watchedResult.data ?? []).map(w => w.tmdb_id), ...watchlistResult.listedIds],
+    )
+
+    const seeAllForYou = (
+        <Link
+            href='/for-you'
+            className='flex items-center gap-1 text-[11px] font-semibold text-muted-foreground hover:text-foreground transition-colors'
+        >
+            See all
+            <ArrowRight className='h-3 w-3' />
+        </Link>
+    )
+
     return (
         <MediaStateProvider
             listId={watchlistResult.listId}
@@ -167,6 +185,9 @@ export default async function Home() {
                 >
                     {/* For you */}
                     <MediaSection title='Top 10 Right Now' items={trendingDailyResult.data} ranked />
+                    {topPicks.length > 0 && (
+                        <MediaSection title='For You' items={topPicks} action={seeAllForYou} filterable />
+                    )}
                     {cwItems.length > 0 && (
                         <MediaSection title='Continue Watching' items={cwItems} type='show' progressMap={progressMap} filterable />
                     )}

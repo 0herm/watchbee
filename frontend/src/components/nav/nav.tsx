@@ -1,6 +1,6 @@
 'use client'
 
-import { Bell, Clapperboard, Compass, Search, User } from 'lucide-react'
+import { Bell, Clapperboard, Compass, Search, Sparkles, User } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
@@ -54,6 +54,10 @@ export default function NavBar() {
                             ⌘K
                         </kbd>
                     </button>
+
+                    <Link href='/for-you' className={iconLinkClasses} aria-label='For You'>
+                        <Sparkles className='h-3.5 w-3.5' />
+                    </Link>
 
                     <Link href='/discover' className={iconLinkClasses} aria-label='Discover'>
                         <Compass className='h-3.5 w-3.5' />
