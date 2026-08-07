@@ -297,6 +297,15 @@ html.vt-back::view-transition-new(media-backdrop) {
     animation: none;
 }
 
+@media (max-width: 640px) {
+    ::view-transition-old(root),
+    ::view-transition-new(root),
+    html.vt-back::view-transition-old(root),
+    html.vt-back::view-transition-new(root) {
+        animation: none !important;
+    }
+}
+
 @media (display-mode: standalone) {
     .hide-in-app { display: none !important; }
 }

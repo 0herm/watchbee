@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import config from '@config'
+import config, { POSTER_SIZES } from '@config'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Image as ImageIcon, Star, Bookmark, Eye, EyeOff } from 'lucide-react'
@@ -79,6 +79,26 @@ export default function MediaCard({ item, type, progress }: MediaCardProps) {
 
     function armTransition() {
         if (!posterRef.current) return
+        const details = item as { tagline?: string }
+        const originalTitle = ('original_title' in item ? item.original_title : undefined)
+            ?? ('original_name' in item ? item.original_name : undefined)
+        sessionStorage.setItem('vt-hero', JSON.stringify({
+            poster: item.poster_path ?? '',
+            backdrop: item.backdrop_path ?? '',
+            title,
+            originalTitle: originalTitle && originalTitle !== title ? originalTitle : undefined,
+            type: mediaType,
+            rating,
+            votes: item.vote_count ?? 0,
+            year,
+            // Keep '' (known: no tagline) distinct from undefined (unknown, e.g. a
+            // trending/discover item) so the skeleton only reserves a loader line
+            // when a tagline might still appear.
+            tagline: details.tagline,
+            overview: item.overview ?? '',
+            inList,
+            watched,
+        }))
         armPoster(posterRef.current)
         const nodes = document.querySelectorAll(`[data-vt-id="${item.id}"]`)
         const index = Array.prototype.indexOf.call(nodes, posterRef.current)
@@ -155,7 +175,7 @@ export default function MediaCard({ item, type, progress }: MediaCardProps) {
                             fill
                             className={'object-cover transition-transform duration-300 group-hover:scale-[1.04] ' +
                                 'bg-muted flex items-center justify-center text-center text-xs text-muted-foreground'}
-                            sizes='(max-width: 640px) 45vw, (max-width: 1024px) 20vw, 11rem'
+                            sizes={POSTER_SIZES}
                         />
                     ) : (
                         <div className='flex h-full w-full items-center justify-center bg-muted'>

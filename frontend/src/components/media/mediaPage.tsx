@@ -1,4 +1,4 @@
-import config from '@config'
+import config, { POSTER_SIZES } from '@config'
 import { formatRuntime, formatVotes } from '@/utils/format'
 import Image from 'next/image'
 import { Film, Globe, Image as ImageIcon, Star, Tv } from 'lucide-react'
@@ -59,7 +59,7 @@ export default function MediaPage({ item, media, region, language, extras }: Med
                 <HeroBackdrop id={item.id}>
                     {item.backdrop_path && (
                         <Image
-                            src={`https://image.tmdb.org/t/p/w1280${item.backdrop_path}`}
+                            src={`https://image.tmdb.org/t/p/w780${item.backdrop_path}`}
                             alt=''
                             fill
                             priority
@@ -91,7 +91,7 @@ export default function MediaPage({ item, media, region, language, extras }: Med
                                 style={{ viewTransitionName: 'active-poster' } as React.CSSProperties}
                             >
                                 <Image
-                                    src={`${config.url.IMAGE_URL}${item.poster_path}`} alt={title} fill priority sizes='11rem'
+                                    src={`${config.url.POSTER_URL}${item.poster_path}`} alt={title} fill priority sizes={POSTER_SIZES}
                                     className='object-cover bg-muted flex items-center justify-center text-center text-xs text-muted-foreground'
                                 />
                             </div>
@@ -116,7 +116,7 @@ export default function MediaPage({ item, media, region, language, extras }: Med
                             </div>
                             <div className='flex flex-col gap-1.5'>
                                 <h1
-                                    className='display font-black leading-[0.95] text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.7)] wrap-break-word'
+                                    className='display font-black leading-[0.95] text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.7)] wrap-break-word line-clamp-2 sm:line-clamp-none'
                                     style={{ fontSize: 'clamp(2.25rem, 6vw, 4.25rem)' }}
                                 >
                                     {title}
@@ -132,11 +132,11 @@ export default function MediaPage({ item, media, region, language, extras }: Med
                                     <><span className='text-white/20'>·</span><span>{show.number_of_seasons} season{show.number_of_seasons !== 1 ? 's' : ''}</span></>
                                 )}
                             </div>
-                            {item.tagline && <p className='text-[13px] italic text-white/35 leading-snug font-light tracking-wide'>&ldquo;{item.tagline}&rdquo;</p>}
+                            {item.tagline && <p className='text-[13px] italic text-white/35 leading-snug font-light tracking-wide line-clamp-1'>&ldquo;{item.tagline}&rdquo;</p>}
                             {item.genres.length > 0 && (
-                                <div className='flex flex-wrap gap-1.5'>
+                                <div className='flex gap-1.5 overflow-x-auto noscroll'>
                                     {item.genres.map((genre) => (
-                                        <ChipLabel key={genre.id} className='bg-white/6 border-white/10 text-white/65'>
+                                        <ChipLabel key={genre.id} className='shrink-0 whitespace-nowrap bg-white/6 border-white/10 text-white/65'>
                                             {genre.name}
                                         </ChipLabel>
                                     ))}

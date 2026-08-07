@@ -1,5 +1,7 @@
 import { version } from './package.json'
 
+export const POSTER_SIZES = '(max-width: 640px) 45vw, (max-width: 1024px) 20vw, 11rem'
+
 const config = {
     url: {
         API_URL:    'https://api.themoviedb.org/',
